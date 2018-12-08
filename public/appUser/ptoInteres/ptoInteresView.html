@@ -1,17 +1,47 @@
 <navuser></navuser>
 <div class="row" ng-controller="ptoInteresController">
-    <div class="card col-sm-6 col-md-3">
-        <div class="card-header">
-            Puntos de interes
+    <div class="card col-sm-3 col-md-3">
+        <div class="card-header border-info text-center">Puntos de interes de la ciudad</div>
+        <div class="card-body border-info">
+            <div class="form-group">
+                <label class="text-center">Seleccione un tipo de punto</label>
+                <br>
+                <div class="input-group">
+                    <select class="custom-select" ng-model="nombreTipoSeleccionado"
+                                ng-options="nametipo.nombre for nametipo in nombresTiposInteres | orderBy:'clave' track by nametipo.id"></select>
+                    <div class="input-group-append">
+                        <button class="btn btn-info" type="button" ng-click="buscarPuntos()">Buscar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id = "listPtoInteres" class="form-group">
+            <table class="table">
+                <tr ng-repeat="punto in ptosInteresByTipo.slice(((pagActual-1)*cantForPage), ((pagActual)*cantForPage))"
+                ng-click="setPuntoSelected(punto)" ng-class="{sel:punto.id==idPuntoFilaSeleccionada}">
+                <td>{{punto.nombre}}</td>
+                <td>{{punto.tipointeres.nombre}}</td>
+                </tr>
+            </table>
+            <div class="row text-center">
+            <nav class="navbar navbar-expand-md" aria-label="...">
+                    <ul class="pagination">
+                      <li class="page-item disabled">
+                        <button type="button" class="btn btn-primary" ng-click="pagAnterior()"><<|</button>
+                      </li>
+                      <li class="page-item" href="#">
+                        <a class="page-link"> página {{pagActual}}/{{pagTotal}}</a>
+                      </li>
+                      <li class="page-item">
+                        <button type="button" class="btn btn-primary" ng-click="pagSiguiente()" >|>></button>
+                      </li>
+                    </ul>
+            </nav>
+            </div>
         </div>
     </div>
 
-    <div class="card col-sm-6 col-md-9">
-        <div class="card-header">
-            Este si es el MAPA.
-        </div>
-        <div class="container-fluid-map">
-            <div id="map" class="map" style="position: fixed;"></div>
-        </div>
+    <div class="card col-sm-9 col-md-9">
+        <div id="map" class="map" style="position: relative;"></div>
     </div>
 </div>

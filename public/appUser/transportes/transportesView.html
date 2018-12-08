@@ -38,6 +38,11 @@
                 <input type="text" class="form-control col-sm-6" id="nombrePuntoActual" 
                     ng-model="unidadSeleccionda.precioBoleto" readonly>
             </div>
+            <div class="row form-group text-left" ng-hide="!hayUnidadSeleccionada">
+                <label for="exampleInputEmail1" class="col-sm-6 col-form-label">Empresa responsable:</label>
+                <input type="text" class="form-control col-sm-6" id="nombrePuntoActual" 
+                    ng-model="unidadSeleccionda.empresa.nombre" readonly>
+            </div>
             <div class="text-center btn-group-sm" ng-hide="!hayUnidadSeleccionada">
                 <!-- <button type="button" class="btn btn-info" ng-click="dibujarParadas()">Ver Paradas</button> -->
                 <button type="button" class="btn btn-info" ng-click="mostrarParadas()">{{botonVerParadas}}</button>

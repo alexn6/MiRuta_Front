@@ -27,10 +27,13 @@
             // PUNTO DE INTERES
             savePtoInteres: savePtoInteres,
             updatePtoInteres: updatePtoInteres,
+            deletePtoInteres: deletePtoInteres,
             getPtoInteresByType: getPtoInteresByType,
             // TIPO PUNTO DE INTERES
             getTipoInteres: getTipoInteres,
-            getNamesTipoInteres: getNamesTipoInteres
+            getNamesTipoInteres: getNamesTipoInteres,
+            // ROUTING
+            getAdreessFromCoord: getAdreessFromCoord
         };
         return service;
 
@@ -329,6 +332,24 @@
             return promise;
         }
 
+        function deletePtoInteres(idPunto){
+            var defered = $q.defer();
+            var promise = defered.promise;
+
+            $http({
+                method: 'POST',
+                url: path.DELETE_PTO_INTERES + "?id=" + idPunto
+            }).then(function successCallback(res) {
+                defered.resolve(res.data);
+            },
+                function errorCallback(err) {
+                    defered.reject(err)
+                }
+            );
+
+            return promise;
+        }
+
         function getPtoInteresByType(tipo){
             var defered = $q.defer();
             var promise = defered.promise;
@@ -386,5 +407,25 @@
             return promise;
         }
 
+        // ######################## TIPO INTERES ########################
+        // ##############################################################
+
+        function getAdreessFromCoord(lon, lat){
+            var defered = $q.defer();
+            var promise = defered.promise;
+            
+            $http({
+                method: 'GET',
+                url: path.GET_ADREESS + "?lon=" +lon+ "&lat=" +lat
+            }).then(function successCallback(res) {
+                defered.resolve(res.data);
+            },
+                function errorCallback(err) {
+                    defered.reject(err)
+                }
+            );
+
+            return promise;
+        }
     }
 })()

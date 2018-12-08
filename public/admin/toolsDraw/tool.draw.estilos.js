@@ -11,10 +11,9 @@
         
         var service = {
             // ************** pto interes ****************
-            marcadorCargaActual: marcadorCargaActual,
-            marcadorCargaNuevo: marcadorCargaNuevo,
-            marcadorTrasladoActual: marcadorTrasladoActual,
-            marcadorTrasladoNuevo: marcadorTrasladoNuevo,
+            marcadorCarga: marcadorCarga,
+            marcadorTraslado: marcadorTraslado,
+            // ************** recorrido ****************
             marcadorInicioRecorrido: marcadorInicioRecorrido,
             marcadorFinRecorrido: marcadorFinRecorrido,
             recorridoUnidad: recorridoUnidad,
@@ -28,23 +27,13 @@
         // #############################################################################
         // ########################## FUNCIONES PUBLICAS ###############################
 
-        function marcadorCargaActual(){
-            var estilo = createStyleByIcon(icon.PUNTO_CARGA_ACTUAL);
+        function marcadorCarga(){
+            var estilo = createStyleByIcon(icon.PUNTO_CARGA);
             return estilo;
         }
 
-        function marcadorCargaNuevo(){
-            var estilo = createStyleByIcon(icon.PUNTO_CARGA_NUEVO);
-            return estilo;
-        }
-
-        function marcadorTrasladoActual(){
-            var estilo = createStyleByIcon(icon.PUNTO_TRASLADO_ACTUAL);
-            return estilo;
-        }
-
-        function marcadorTrasladoNuevo(){
-            var estilo = createStyleByIcon(icon.PUNTO_TRASLADO_NUEVO);
+        function marcadorTraslado(){
+            var estilo = createStyleByIcon(icon.PUNTO_TRASLADO);
             return estilo;
         }
 

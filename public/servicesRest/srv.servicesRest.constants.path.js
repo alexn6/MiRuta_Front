@@ -29,6 +29,9 @@
             // ###################### PUNTO INTERES ######################
             SAVE_PTO_INETERES: 'http://localhost:8080/miruta/ptoInteres/create',
             GET_PUNTOS_BY_TIPO: 'http://localhost:8080/miruta/ptoInteres/byNameType',
-            UPDATE_PTO_INTERES: 'http://localhost:8080/miruta/ptoInteres/update'
+            UPDATE_PTO_INTERES: 'http://localhost:8080/miruta/ptoInteres/update',
+            DELETE_PTO_INTERES: 'http://localhost:8080/miruta/ptoInteres/detete',
+            // ###################### ROUTING ######################
+            GET_ADREESS: 'http://localhost:8080/miruta/routing/addressCoord'
         });
 })()

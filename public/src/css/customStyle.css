@@ -76,7 +76,6 @@
 }
 
 /* ***************************************************** */
-
 /* ******************** admin recorrido **************** */
 
 #botonIda {
@@ -88,8 +87,71 @@
 }
 
 /* ***************************************************** */
+/* ***************************************************** */
 
 /* ***************************************************** */
+/* ******************** pto interes cliente ************ */
+#listPtoInteres {
+    margin: auto
+}
+
+/* ***************************************************** */
+/* ************ busqueda de recorridos user ************ */
+#seleccionPunto {
+    margin-left: 20;
+    margin-right: 20
+}
+
+#btn-toolbar-recorrido{
+    justify-content: center;
+    margin-top: 25px
+}
+
+/* Style buttons */
+#iconButton {
+    background-color: DodgerBlue; /* Blue background */
+    border: none; /* Remove borders */
+    color: white; /* White text */
+    padding: 5px 20px; /* Some padding */
+    font-size: 32px; /* Set a font size */
+    cursor: pointer; /* Mouse pointer on hover */
+}
+
+/* Darker background on mouse-over */
+#iconButton:hover {
+    background-color: RoyalBlue;
+}
+
+#buttonGeolocation{
+    background-color: DodgerBlue; /* Blue background */
+    border: none; /* Remove borders */
+    color: white; /* White text */
+    font-size: 16px; /* Set a font size */
+    cursor: pointer; /* Mouse pointer on hover */
+}
+#buttonGeolocation:hover {
+    background-color: RoyalBlue;
+}
+
+/* personalizando los mjes de info al pasar el mouse sobre un elemento */
+.tooltip-inner{
+    max-width:200px;
+    padding:3px 8px;
+    color:#fff;
+    text-align:center;
+    background-color:#5cb1d8 !important;
+    border-radius:.25rem
+}
+
+#opcionesRecorrido{
+    margin-top: 12px;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+#accordion{
+    margin-top: 30px
+}
 
 /*
  * Style tweaks

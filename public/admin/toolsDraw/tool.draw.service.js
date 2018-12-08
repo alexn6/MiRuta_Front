@@ -17,14 +17,13 @@
             OSRM_POINT_NEREAST: 'http://localhost:8080/miruta/routing/nearestPoint',
             OSRM_ADDRESs_POINT: 'http://localhost:8080/miruta/routing/addressPoint',
             OSRM_ROUTE: 'http://localhost:8080/miruta/routing/route',
+            OSRM_ROUTE_TRANSPORT: 'http://localhost:8080/miruta/routing/routeTransport',
             ICON_PARADA_IDA_NORMAL: '../MiRuta_2017/public/src/img/parada-ida.png',
             ICON_PARADA_IDA_INICIO: '../MiRuta_2017/public/src/img/parada-ida-inicio.png',
             ICON_PARADA_IDA_FIN: '../MiRuta_2017/public/src/img/parada-ida-fin.png',
             ICON_PARADA_VUELTA_NORMAL: '../MiRuta_2017/public/src/img/parada-vuelta.png',
             ICON_PARADA_VUELTA_INICIO: '../MiRuta_2017/public/src/img/parada-vuelta-inicio.png',
-            ICON_PARADA_VUELTA_FIN: '../MiRuta_2017/public/src/img/parada-vuelta-fin.png',
-            ICON_PUNTO_CARGA_ACTUAL: '../MiRuta_2017/public/src/img/carga-actual.png',
-            ICON_PUNTO_CARGA_NUEVA: '../MiRuta_2017/public/src/img/carga-nueva.png'
+            ICON_PARADA_VUELTA_FIN: '../MiRuta_2017/public/src/img/parada-vuelta-fin.png'
         }
 
         var estilos = {
@@ -73,25 +72,11 @@
                     anchor: [0.5, 1],
                     src: url.ICON_PARADA_VUELTA_FIN
                 })
-            }),
-            punto_carga_actual: new ol.style.Style({
-                image: new ol.style.Icon({
-                    anchor: [0.5, 1],
-                    src: url.ICON_PUNTO_CARGA_ACTUAL
-                })
-            }),
-            punto_carga_nueva: new ol.style.Style({
-                image: new ol.style.Icon({
-                    anchor: [0.5, 1],
-                    src: url.ICON_PUNTO_CARGA_NUEVA
-                })
             })
         };
 
         var service = {
             // ************** pto interes ****************
-            getMarcadorCargaNueva: getMarcadorCargaNueva,
-            getMarcadorCargaActual: getMarcadorCargaActual,
             getMarcadorPtoInteres: getMarcadorPtoInteres,
             // paradas
             getMarcadorParadaIda: getMarcadorParadaIda,
@@ -100,6 +85,7 @@
             getPointNearest: getPointNearest,
             getAddressPoint: getAddressPoint,
             getRoute: getRoute,
+            getRouteTransport: getRouteTransport,
             setStyleParadaFin: setStyleParadaFin,
             setStyleParadaNormal: setStyleParadaNormal,
             setStyleParadaFinVuelta: setStyleParadaFinVuelta,
@@ -117,12 +103,6 @@
         // #############################################################################
         // ########################## FUNCIONES PRIVADAS ###############################
 
-        function convertTo4326(coord) {
-            return ol.proj.transform([
-                parseFloat(coord[0]), parseFloat(coord[1])
-            ], 'EPSG:3857', 'EPSG:4326');
-        }
-
         // #############################################################################
 
         // #############################################################################
@@ -132,24 +112,6 @@
             var marcador = new ol.Feature({
                 geometry: new ol.geom.Point([coord[0], coord[1]])
             });
-
-            return marcador;
-        }
-
-        function getMarcadorCargaActual(coord) {
-            var marcador = new ol.Feature({
-                geometry: new ol.geom.Point([coord[0], coord[1]])
-            });
-            marcador.setStyle(estilos.punto_carga_actual);
-
-            return marcador;
-        }
-
-        function getMarcadorCargaNueva(coord) {
-            var marcador = new ol.Feature({
-                geometry: new ol.geom.Point([coord[0], coord[1]])
-            });
-            marcador.setStyle(estilos.punto_carga_nueva);
 
             return marcador;
         }
@@ -272,6 +234,28 @@
             return promise;
         }
 
+        function getRouteTransport(datos) {
+            var defered = $q.defer();
+            var promise = defered.promise;
+
+            $http({
+                method: 'POST',
+                url: url.OSRM_ROUTE_TRANSPORT,
+                data: datos
+            }).then(function successCallback(res) {
+                defered.resolve(res.data);
+                console.log("Promesa ruta");
+                console.log(res.data);
+            },
+                function errorCallback(err) {
+                    defered.reject(err);
+                    console.log("error en la promesa");
+                    console.log(err);
+                }
+            );
+
+            return promise;
+        }
         
         // #############################################################################
 

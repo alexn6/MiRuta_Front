@@ -61,20 +61,21 @@
             console.log("cambio la unidad");
             if(vm.unidadSeleccionda != null){
                 vm.hayUnidadSeleccionada = true;
+                // cada vez q se cambia deberiamos dibujar lor recorridos
+                // y paradas en el mapa
+                if(!existeRecorrido(vm.unidadSeleccionda.nombre)){
+                    console.log("Se va a buscar el recorrido de "+vm.unidadSeleccionda.nombre);
+                    // se debe ir a buscar el geom del recorrido
+                    cargaRecorridoUnidad(vm.unidadSeleccionda.id);
+                }
+                else{
+                    console.log("El recorrido de la unidad seleccionada ya se recupero");
+                    var datosUnidad = coordRecorridos[vm.unidadSeleccionda.nombre];
+                    dibujarRecorrido(datosUnidad);
+                    verAnimacionRecorrido(datosUnidad);
+                }
             }
-            // cada vez q se cambia deberiamos dibujar lor recorridos
-            // y paradas en el mapa
-            if(!existeRecorrido(vm.unidadSeleccionda.nombre)){
-                console.log("Se va a buscar el recorrido de "+vm.unidadSeleccionda.nombre);
-                // se debe ir a buscar el geom del recorrido
-                cargaRecorridoUnidad(vm.unidadSeleccionda.id);
-            }
-            else{
-                console.log("El recorrido de la unidad seleccionada ya se recupero");
-                var datosUnidad = coordRecorridos[vm.unidadSeleccionda.nombre];
-                dibujarRecorrido(datosUnidad);
-                verAnimacionRecorrido(datosUnidad);
-            }
+            
         }
 
         // dibujo los recorridos de la unidad seleccionada
@@ -271,6 +272,10 @@
         function cargaRecorridoUnidad(idUnidad) {
             dataServer.getRecorridoById(idUnidad)
                 .then(function (data) {
+                    if(data == null){
+                        alert("La unidad aun no dispone de un recorrido");
+                        return;
+                    }
                     // una vez obtenida la respuesta del servidor realizamos las sigientes acciones
                     // datosRecorridos = data;
                     console.log("Datos recuperados con EXITO! = RECORRIDO_BY_ID");

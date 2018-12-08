@@ -10,31 +10,58 @@
             <div class="collapse" id="menuCreacion">
                 <div class="card card-body">
                     <form>
-                        <!-- <label class="text-center"><b>Seleccione un punto en el mapa</b></label>
-                        <hr> -->
+                        <div class="alert alert-info" role="alert">
+                            <small><b>Los campos con * son obligatorios</b></small>
+                        </div>
                         <div class="form-group">
                             <div id="collapseThree" class="collapse show" aria-labelledby="headingCreate" data-parent="#accordion">
-                                <label>Tipo de punto: </label>
-                                <!-- <select class="custom-select" id="repeatSelect" ng-model="tipoSeleccionado">
-                                    <option ng-repeat="tipo in tiposInteres | orderBy">{{nombre}}</option>
-                                </select> -->
+                                <label>(*) Tipo de punto</label>
                                 <select class="custom-select" ng-model="tipoSeleccionado"
-                                    ng-options="tipo.nombre for tipo in tiposInteres | orderBy:'nombre' track by tipo.id"></select>
+                                        ng-options="tipo.nombre for tipo in tiposInteres | orderBy:'nombre' track by tipo.id"></select>
                             </div>
                         </div>
-                        <div class="form-group" ng-hide="!hayTipoSeleccionadoCreate()">
+                        <div class="form-group" ng-hide="!tipoSeleccionado">
+                            <div id="locationField">
+                                <label>(*) Direccion <small>[escriba la dirección o seleccione desde el mapa]</small></label>
+                                <input type="text" class="form-control" id="direccionAutocomplete" 
+                                    ng-model="direccionSeleccionada" placeholder="Ingrese una direccion">
+                            </div>
+                            <!-- <script>
+                                var autocomplete;
+                          
+                                function initAutocomplete() {
+                                  // Create the autocomplete object, restricting the search to geographicallocation types.
+                                  autocomplete = new google.maps.places.Autocomplete(
+                                      /** @type {!HTMLInputElement} */(document.getElementById('autocomplete')),
+                                      {types: ['geocode']});
+                          
+                                  // callback q ejecuta al seleccionar una direccion
+                                autocomplete.addListener('place_changed', mostrarDire);
+                                }
+    
+                                function mostrarDire(){
+                                    console.log("Esto seria la promesa");
+
+                                    var place = autocomplete.getPlace();
+                                    console.log(place.geometry.location.lat());
+                                    console.log(place.geometry.location.lng());
+                                }
+
+                            </script>
+                            <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDti7qoPD_lFYuAGLk7EuXYcJr913cbkW8&libraries=places&callback=initAutocomplete"
+                                async defer></script> -->
+                        </div>
+                        <div class="form-group"  ng-hide="!tipoSeleccionado">
                             <div id="collapseThree" class="collapse show" aria-labelledby="headingCreate" data-parent="#accordion">
-                                <label>Nombre: </label>
+                                <label>Nombre (*) </label>
                                 <input type="text" class="form-control" id="inputNombre" 
                                     ng-model="nombrePunto" placeholder="pto_de_interes" required>
                             </div>
                         </div>
-                        <!-- <div class="alert alert-danger" ng-hide="!datosVaciosCreacion()">
-                            Datos imcompletos!
-                        </div> -->
-                        <div class="text-center btn-group-sm" ng-hide="!hayTipoSeleccionadoCreate()">
+                        <!-- <div class="text-center btn-group-sm" ng-hide="!hayTipoSeleccionadoCreate()"> -->
+                        <div class="text-center btn-group-sm">
                             <button type="button" class="btn btn-success" ng-click="guardarPunto()" ng-disabled="guardadoExitoso">Guardar punto</button>
-                            <button type="button" class="btn btn-primary" ng-click="resetDatos()" ng-disabled="!guardadoExitoso">Nuevo punto</button>
+                            <button type="button" class="btn btn-primary" ng-click="resetDatosCreate()" ng-disabled="!guardadoExitoso">Nuevo punto</button>
                         </div>
                     </form>
                 </div>
@@ -59,7 +86,7 @@
                                   <button class="btn btn-info" type="button" ng-click="buscarPuntos()">Buscar</button>
                                 </div>
                         </div>
-                        <div class="form-group" ng-hide="!tipoSeleccionadoUpdate">
+                        <div id="listPtoInteres" class="form-group" ng-hide="!tipoSeleccionadoUpdate">
                                 <table class="table">
                                         <tr ng-repeat="punto in ptosInteresByTipo.slice(((pagActual-1)*cantForPage), ((pagActual)*cantForPage))"
                                         ng-click="setPuntoSelected(punto)" ng-class="{sel:punto.id==idPuntoFilaSeleccionada}">
@@ -88,39 +115,28 @@
                                     </div>
                                     </div>
                                 </div> -->
-                                <div class="row text-center">
-                                <!-- <nav aria-label="..."> -->
-                                <nav class="navbar navbar-expand-md" aria-label="...">
-                                        <ul class="pagination">
-                                          <li class="page-item disabled">
-                                            <button type="button" class="btn btn-primary" ng-click="pagAnterior()"><<|</button>
-                                          </li>
-                                          <!-- <li class="page-item"><a class="page-link" href="#">1</a></li>
-                                          <li class="page-item active">
-                                            <span class="page-link">
-                                              2
-                                              <span class="sr-only">(current)</span>
-                                            </span>
-                                          </li>
-                                          <li class="page-item"><a class="page-link" href="#">3</a></li> -->
-                                          <li class="page-item" href="#">
-                                            <a class="page-link"> página {{pagActual}}/{{pagTotal}}</a>
-                                          </li>
-                                          <li class="page-item">
-                                            <button type="button" class="btn btn-primary" ng-click="pagSiguiente()" >|>></button>
-                                          </li>
-                                        </ul>
-                                </nav>
+                                <div class="row">
+                                    <nav class="navbar navbar-expand-md" aria-label="...">
+                                            <ul class="pagination">
+                                            <li class="page-item disabled">
+                                                <button type="button" class="btn btn-primary" ng-click="pagAnterior()"><<|</button>
+                                            </li>
+                                            <li class="page-item" href="#">
+                                                <a class="page-link"> página {{pagActual}}/{{pagTotal}}</a>
+                                            </li>
+                                            <li class="page-item">
+                                                <button type="button" class="btn btn-primary" ng-click="pagSiguiente()" >|>></button>
+                                            </li>
+                                            </ul>
+                                    </nav>
                                 </div>
                                 <hr>
                                 <div class="text-center" ng-hide="!ptoInteresEditSelec">
-                                    <h6> - - - Datos del punto - - - </h6>
+                                    <h6> <b>Datos nuevos del punto</b></h6>
                                     <br>
                                 </div>
-                                <div class="row form-group text-left" ng-hide="!ptoInteresEditSelec">
-                                    <label for="exampleInputEmail1" class="col-sm-5 col-form-label">Nombre actual:</label>
-                                    <input type="text" class="form-control col-sm-7" id="nombrePuntoActual" 
-                                        ng-model="datosPuntoSeleccionado.nombre" readonly>
+                                <div class="alert alert-info" role="alert">
+                                    <small>Para editar la ubicación arrastre el marcador en el mapa</small>
                                 </div>
                                 <div class="row form-group text-left" ng-hide="!ptoInteresEditSelec">
                                     <label for="exampleInputEmail1" class="col-sm-5 col-form-label">Nombre nuevo:</label>
@@ -133,8 +149,9 @@
                                         ng-options="tipo.nombre for tipo in tiposInteres | orderBy:'nombre' track by tipo.id"></select>
                                 </div>
                                 <div class="text-center btn-group-sm" ng-hide="!ptoInteresEditSelec">
-                                    <button type="button" class="btn btn-info" ng-click="reubicarPunto()" ng-disabled="editUbicacionPunto" >Nueva ubicacion</button>
-                                    <button type="submit" class="btn btn-primary" ng-click="guardarCambios()" >Guardar punto</button>
+                                    <!-- <button type="button" class="btn btn-info" ng-click="cancelarCambios()" ng-disabled="!hayCambios()">Cancelar cambios</button> -->
+                                    <button type="button" class="btn btn-info" ng-click="cancelarCambios()">Cancelar cambios</button>
+                                    <button type="submit" class="btn btn-primary" ng-click="guardarCambios()" >Guardar cambios</button>
                                     <button type="button" class="btn btn-danger" ng-click="eliminarPunto()" >Borrar punto</button>
                                 </div>
                         </div>
@@ -142,6 +159,110 @@
                 </div>
             </div>
         </div>
+        <!-- ######################################################
+        ################## MJES DE INFO ####################### -->
+        <!-- operacion exitosa -->
+        <div class="modal fade" id="mod-operacion-exitosa" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-sm" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel">MiRuta2018</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  La operacion fue realizada con exito
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                </div>
+              </div>
+            </div>
+        </div>
+
+        <!-- no hay cambios realizados -->
+        <div class="modal fade" id="mod-sin-cambios" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-sm" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel">MiRuta2018</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  No se han realizado cambios
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                </div>
+              </div>
+            </div>
+        </div>
+
+        <!-- faltan datos -->
+        <div class="modal fade" id="mod-faltan-datos" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-sm" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel">MiRuta2018</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                    <p><b>¡Faltan datos!</b></p>
+                    <p>Verfique los campos obligatorios (*)</p>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                </div>
+              </div>
+            </div>
+        </div>
+
+        <!-- control seleccion tipo de punto -->
+        <div class="modal fade" id="mod-falta-tipopunto" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-sm" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="exampleModalLabel">MiRuta2018</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body">
+                        <p>Debe seleccionar un tipo de punto.</p>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- descartar cambios -->
+        <div class="modal fade" id="mod-sin-cambios" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-sm" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel">MiRuta2018</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  Ver esto
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                </div>
+              </div>
+            </div>
+        </div>
+        
+        <!-- ###################################################### -->
     </div>
 
     <div class="card col-sm-8 col-md-8">

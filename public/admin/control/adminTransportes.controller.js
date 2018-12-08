@@ -230,7 +230,7 @@
             if((vm.dataUnidadCreate.nombre == "")||vm.dataUnidadCreate.frecuencia == ""){
                 return true;
             }
-            if((vm.intPrecioCreate == "")||(vm.decPrecioCreate == "")){
+            if(vm.intPrecioCreate == ""){
                 return true;
             }
             if((vm.dataUnidadCreate.horaInicio == "")||(vm.dataUnidadCreate.minInicio == "")){
@@ -344,7 +344,7 @@
         // separa el precio de la unidad seleccionada en 2 enteros
         // para poder mostrarlos en la vista
         function separarPrecioBoletoSel() {
-            console.log("Entro a separarBoleto()");
+            // console.log("Entro a separarBoleto()");
             vm.intPrecioUpdate = Math.trunc(vm.unidadSeleccionada.precioBoleto);
             vm.decPrecioUpdate = Number(((vm.unidadSeleccionada.precioBoleto - vm.intPrecioUpdate).toFixed(2)) * 100);
         }
@@ -383,22 +383,25 @@
 
         function datosCompletosUpdate(){
                 if((vm.dataUnidadUpdate.nombre == "")||vm.dataUnidadUpdate.frecuencia == ""){
-                    console.log("La frec o nombre vacios:");
+                    // console.log("La frec o nombre vacios:");
                     console.log(vm.dataUnidadUpdate.nombre + ' , ' +vm.dataUnidadUpdate.frecuencia);
                     return false;
                 }
-                if((vm.intPrecioUpdate == "")||(vm.decPrecioUpdate == "")){
-                    console.log("La frec o nombre vacios:");
+                // if((vm.intPrecioUpdate == "")||(vm.decPrecioUpdate == "")){
+                if(vm.intPrecioUpdate == ""){
+                    // console.log("La frec o nombre vacios:");
                     console.log(vm.intPrecioUpdate + ' , ' +vm.decPrecioUpdate);
                     return false;
                 }
-                if((vm.dataUnidadUpdate.horaInicio == "")||(vm.dataUnidadUpdate.minInicio == "")){
-                    console.log("La frec o nombre vacios:");
+                // if((vm.dataUnidadUpdate.horaInicio == "")||(vm.dataUnidadUpdate.minInicio == "")){
+                if(vm.dataUnidadUpdate.horaInicio == ""){
+                    // console.log("La frec o nombre vacios:");
                     console.log(vm.dataUnidadUpdate.horaInicio + ' , ' +vm.dataUnidadUpdate.minInicio);
                     return false;
                 }
-                if((vm.dataUnidadUpdate.horaFin == "")||(vm.dataUnidadUpdate.minFin == "")){
-                    console.log("La frec o nombre vacios:");
+                // if((vm.dataUnidadUpdate.horaFin == "")||(vm.dataUnidadUpdate.minFin == "")){
+                if(vm.dataUnidadUpdate.horaFin == ""){
+                    // console.log("La frec o nombre vacios:");
                     console.log(vm.dataUnidadUpdate.horaFin + ' , ' +vm.dataUnidadUpdate.minFin);
                     return false;
                 }
