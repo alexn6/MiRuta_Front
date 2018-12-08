@@ -135,7 +135,7 @@
                                     <h6> <b>Datos nuevos del punto</b></h6>
                                     <br>
                                 </div>
-                                <div class="alert alert-info" role="alert">
+                                <div class="alert alert-info" role="alert" ng-hide="!ptoInteresEditSelec">
                                     <small>Para editar la ubicación arrastre el marcador en el mapa</small>
                                 </div>
                                 <div class="row form-group text-left" ng-hide="!ptoInteresEditSelec">
@@ -149,7 +149,6 @@
                                         ng-options="tipo.nombre for tipo in tiposInteres | orderBy:'nombre' track by tipo.id"></select>
                                 </div>
                                 <div class="text-center btn-group-sm" ng-hide="!ptoInteresEditSelec">
-                                    <!-- <button type="button" class="btn btn-info" ng-click="cancelarCambios()" ng-disabled="!hayCambios()">Cancelar cambios</button> -->
                                     <button type="button" class="btn btn-info" ng-click="cancelarCambios()">Cancelar cambios</button>
                                     <button type="submit" class="btn btn-primary" ng-click="guardarCambios()" >Guardar cambios</button>
                                     <button type="button" class="btn btn-danger" ng-click="eliminarPunto()" >Borrar punto</button>
@@ -243,7 +242,7 @@
         </div>
 
         <!-- descartar cambios -->
-        <div class="modal fade" id="mod-sin-cambios" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal fade" id="mod-descartar-cambios" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-sm" role="document">
               <div class="modal-content">
                 <div class="modal-header">
@@ -253,10 +252,32 @@
                   </button>
                 </div>
                 <div class="modal-body">
-                  Ver esto
+                  Se perderan los datos realizados
                 </div>
                 <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                  <button type="button" class="btn btn-info" ng-click="confirmarSalir()" data-dismiss="modal">Aceptar</button>
+                </div>
+              </div>
+            </div>
+        </div>
+
+        <!-- confirma eliminar punto -->
+        <div class="modal fade" id="mod-eliminar-punto" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-sm" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel">MiRuta2018</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  Esta seguro que desea eliminar el punto seleccionado
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                  <button type="button" class="btn btn-info" ng-click="eliminarPtoSeleccionado()" data-dismiss="modal">Aceptar</button>
                 </div>
               </div>
             </div>

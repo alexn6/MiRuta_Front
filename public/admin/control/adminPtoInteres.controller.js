@@ -115,8 +115,9 @@
         // ###########################################################################
         // ################################# EDICION ###############################
 
-        // vm.namesTiposInteres = [];
         vm.nameTipoSeleccionado;
+
+        var puntoSeleccionadoAux = null;
 
         vm.dataPuntoUpdate = {
             id: null,
@@ -139,6 +140,7 @@
         });
 
         // ******************** paginacion ************************
+        // flag para mostrar los datos del punto en la vista
         vm.ptoInteresEditSelec = false;
         vm.tipoSeleccionadoUpdate = false;
 
@@ -153,7 +155,7 @@
         // recupera los puntos del tipo seleccionado
         vm.buscarPuntos = function(){
             if(vm.nameTipoSeleccionado == null){
-                console.log("No hay tipo seleccionado");
+                $('#mod-falta-tipopunto').modal('show');
                 return;
             }
             vm.tipoSeleccionadoUpdate = true;
@@ -178,6 +180,9 @@
         }
 
         vm.cancelarCambios = function(){
+            if(!hayCambiosEdit()){
+                $('#mod-sin-cambios').modal('show');
+            }
             // si hay nuevas coord es xq se modifico el pto original
             if(nuevasCoord != null){
                 var estilo = getStyleMarker(vm.datosPuntoSeleccionado.tipointeres.nombre);
@@ -188,25 +193,28 @@
 
         // cuando se selecciona un punto
         vm.setPuntoSelected = function(puntoSeleccionado){
+            puntoSeleccionadoAux = puntoSeleccionado;
             vm.ptoInteresEditSelec = true;
             if(hayCambiosEdit()){
-                // alert("Perdera los datos ingresados");
-                if (confirm("¿Esta seguro? :se perderan los cambios realizados")) {
-                    console.log("cambio de fila");
-                }
-                else{
-                    return;
-                }
-                // $('#exampleModal').modal('show');
-                // return;
+                $('#mod-descartar-cambios').modal('show');
+                return;
             }
+            cambiarPtoSeleccionado();
+        }
+
+        vm.confirmarSalir = function(){
+            cambiarPtoSeleccionado();
+        }
+
+        function cambiarPtoSeleccionado(){
             resetDatosEdit();
 
-            vm.idPuntoFilaSeleccionada = puntoSeleccionado.id;
-            vm.datosPuntoSeleccionado = puntoSeleccionado;
+            // recuperamos los datos del nuevo punto seleccionado
+            vm.idPuntoFilaSeleccionada = puntoSeleccionadoAux.id;
+            vm.datosPuntoSeleccionado = puntoSeleccionadoAux;
 
-            console.log("Punto seleccionado nuevo: ");
-            console.log(puntoSeleccionado);
+            console.log("Punto seleccionado nuevo aux: ");
+            console.log(puntoSeleccionadoAux);
             // recupero el estilo de acuerdo al tipo de punto para dibujarlo en el mapa
             var estilo = getStyleMarker(vm.datosPuntoSeleccionado.tipointeres.nombre);
             dibujarMarcadorUnico(vm.datosPuntoSeleccionado.coordenada.coordinates, estilo, vectorSourceEdicion);
@@ -219,42 +227,18 @@
             nuevasCoord = null;
         }
 
-        // vm.actualizarDatosPuntoSeleccionado = function(){
-        //     $('#exampleModal').modal('hide');
-        //     console.log("Se cambio el punto a editar");
-        //     // cada vez que seleccionamos otro punto reseteamos los valores de las variables
-        //     vm.nuevoNombre = null;
-        //     vm.nuevoTipoPunto = null;
-        //     nuevasCoord = null;
-        //     vm.ptoInteresEditSelec = true;
-
-        //     vm.idPuntoFilaSeleccionada = puntoSeleccionado.id;
-        //     vm.datosPuntoSeleccionado = puntoSeleccionado;
-        //     // // mostramos el punto en el mapa
-        //     console.log("Punto seleccionado nuevo: ");
-        //     console.log(puntoSeleccionado);
-        //     // recupero el estilo de acuerdo al tipo de punto
-        //     // var estilo = getStyleMarker(vm.datosPuntoSeleccionado);
-        //     var estilo = getStyleMarker(vm.datosPuntoSeleccionado.tipointeres.nombre);
-        //     dibujarMarcadorUnico(vm.datosPuntoSeleccionado.coordenada.coordinates, estilo, vectorSourceEdicion);
-        // }
-
         vm.pagAnterior = function(){
             if(vm.pagActual > 1){
                 vm.pagActual--;
-                // console.log('Pagina actual PREV: ' + vm.pagActual);
                 return;
             }
-            // console.log("No hay paginas para retroceder");
         }
 
         vm.pagSiguiente = function(){
             if(vm.pagActual < vm.pagTotal){
                 vm.pagActual++;
-                // console.log('Pagina actual NEXT: ' + vm.pagActual);
                 return;
             }
-            // console.log("No hay paginas para avanzar");
         }
 
         vm.guardarCambios = function(){
@@ -268,8 +252,16 @@
         }
 
         vm.eliminarPunto = function(){
-            if(vm.datosPuntoSeleccionado != null)
-                eliminarPuntoInteres();
+            if(vm.datosPuntoSeleccionado != null){
+                $('#mod-eliminar-punto').modal('show');
+                return;
+            }
+            // if(vm.datosPuntoSeleccionado != null)
+            //     eliminarPuntoInteres();
+        }
+
+        vm.eliminarPtoSeleccionado = function(){
+            eliminarPuntoInteres();
         }
 
         function hayCambiosEdit(){
@@ -310,8 +302,8 @@
             else{
                 vm.dataPuntoUpdate.idTipointeres = vm.datosPuntoSeleccionado.tipointeres.id;
             }
-            console.log("Datos nuevos recuperados:");
-            console.log(vm.dataPuntoUpdate);
+            // console.log("Datos nuevos recuperados:");
+            // console.log(vm.dataPuntoUpdate);
         }
 
         function actualizarCamposPuntoEditado(datosNuevos){
@@ -336,7 +328,6 @@
 
         // agrega el tipo de punto generico
         function agregarTipo(arrayTipos){
-            console.log("Entro a agregarTipo");
             var indice = arrayTipos.length;
             var nuevoTipo = {
                 "id": indice,
@@ -378,9 +369,9 @@
         }
 
         function actualizarPuntoInteres(){
-            console.log(vm.dataPuntoUpdate);
-            console.log(vm.datosPuntoSeleccionado);
-            console.log(vm.nameTipoSeleccionado);
+            // console.log(vm.dataPuntoUpdate);
+            // console.log(vm.datosPuntoSeleccionado);
+            // console.log(vm.nameTipoSeleccionado);
             dataServer.updatePtoInteres(vm.dataPuntoUpdate)
                 .then(function (data) {
                     // vm.guardadoExitoso = true;
