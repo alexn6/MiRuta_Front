@@ -1,6 +1,5 @@
 <navadmin></navadmin>
 <div class="row" ng-controller="adminPtoInteresController">
-    <!-- <div class="container-fluid"> -->
     <div class="card col-sm-4 col-md-4">
         <div class="card">
             <button class="btn btn-primary" type="button" ng-click="selectCreate()" data-toggle="collapse" data-target="#menuCreacion" aria-expanded="false" aria-controls="menuCreacion">
@@ -26,39 +25,14 @@
                                 <input type="text" class="form-control" id="direccionAutocomplete" 
                                     ng-model="direccionSeleccionada" placeholder="Ingrese una direccion">
                             </div>
-                            <!-- <script>
-                                var autocomplete;
-                          
-                                function initAutocomplete() {
-                                  // Create the autocomplete object, restricting the search to geographicallocation types.
-                                  autocomplete = new google.maps.places.Autocomplete(
-                                      /** @type {!HTMLInputElement} */(document.getElementById('autocomplete')),
-                                      {types: ['geocode']});
-                          
-                                  // callback q ejecuta al seleccionar una direccion
-                                autocomplete.addListener('place_changed', mostrarDire);
-                                }
-    
-                                function mostrarDire(){
-                                    console.log("Esto seria la promesa");
-
-                                    var place = autocomplete.getPlace();
-                                    console.log(place.geometry.location.lat());
-                                    console.log(place.geometry.location.lng());
-                                }
-
-                            </script>
-                            <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDti7qoPD_lFYuAGLk7EuXYcJr913cbkW8&libraries=places&callback=initAutocomplete"
-                                async defer></script> -->
                         </div>
                         <div class="form-group"  ng-hide="!tipoSeleccionado">
                             <div id="collapseThree" class="collapse show" aria-labelledby="headingCreate" data-parent="#accordion">
-                                <label>Nombre (*) </label>
+                                <label>(*) Nombre </label>
                                 <input type="text" class="form-control" id="inputNombre" 
                                     ng-model="nombrePunto" placeholder="pto_de_interes" required>
                             </div>
                         </div>
-                        <!-- <div class="text-center btn-group-sm" ng-hide="!hayTipoSeleccionadoCreate()"> -->
                         <div class="text-center btn-group-sm">
                             <button type="button" class="btn btn-success" ng-click="guardarPunto()" ng-disabled="guardadoExitoso">Guardar punto</button>
                             <button type="button" class="btn btn-primary" ng-click="resetDatosCreate()" ng-disabled="!guardadoExitoso">Nuevo punto</button>
@@ -90,31 +64,9 @@
                                 <table class="table">
                                         <tr ng-repeat="punto in ptosInteresByTipo.slice(((pagActual-1)*cantForPage), ((pagActual)*cantForPage))"
                                         ng-click="setPuntoSelected(punto)" ng-class="{sel:punto.id==idPuntoFilaSeleccionada}">
-                                        <!-- data-toggle="modal" data-target="#exampleModal"> -->
                                         <td>{{punto.nombre}}</td>
                                         </tr>
                                 </table>
-                                <!-- Modal -->
-                                <!-- <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-                                    aria-hidden="true" ng-hide="!ptoInteresEditSelec">
-                                    <div class="modal-dialog" role="document">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                        <h5 class="modal-title" id="exampleModalLabel">Edición de punto</h5>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                        </div>
-                                        <div class="modal-body">
-                                            Perderá los cambios realizados.
-                                        </div>
-                                        <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                                        <button type="button" class="btn btn-primary" ng-click="actualizarDatosPuntoSeleccionado()">Confirmar</button>
-                                        </div>
-                                    </div>
-                                    </div>
-                                </div> -->
                                 <div class="row">
                                     <nav class="navbar navbar-expand-md" aria-label="...">
                                             <ul class="pagination">

@@ -21,9 +21,7 @@
         vm.map = creatorMap.getMap();
         const ZOOM_PTO_INTERES = 16;
 
-        var estilosActuales;
-
-        estilosActuales = [];
+        var estilosActuales = [];
 
         // ###########################################################################
         // ################################# CREACION ###############################
@@ -98,6 +96,7 @@
                 "lon": "",
                 "idTipo": ""
             }
+            vm.direccionSeleccionada = null;
             latPuntoCreacion = null;
             lonPuntoCreacion = null;
 
@@ -256,8 +255,6 @@
                 $('#mod-eliminar-punto').modal('show');
                 return;
             }
-            // if(vm.datosPuntoSeleccionado != null)
-            //     eliminarPuntoInteres();
         }
 
         vm.eliminarPtoSeleccionado = function(){
@@ -323,7 +320,8 @@
         function cargarIconos(){
             // iconos para mostrar puntos
             estilosActuales["carga"] = styles.marcadorCarga();
-            estilosActuales["traslado"] = styles.marcadorTraslado();
+            //corregir esto
+            estilosActuales["Taxi/Remis"] = styles.marcadorTraslado();
         }
 
         // agrega el tipo de punto generico
@@ -340,7 +338,7 @@
         // ################################# Serv REST ###############################
 
         function cargaTiposPuntosInteres() {
-            dataServer.getTipoInteres()
+            dataServer.getTipoPtoInteres()
                 .then(function (data) {
                     // una vez obtenida la respuesta del servidor realizamos las sigientes acciones
                     vm.tiposInteres = data;
@@ -361,6 +359,8 @@
                     vm.guardadoExitoso = true;
                     console.log("Creacion con EXITO! = PUNTOS_INTERES");
                     console.log(data);
+                    // buscamos los puntos para que la creacion se vea reflejada en el otro panel
+                    vm.buscarPuntos();
                     $('#mod-operacion-exitosa').modal('show');
                 })
                 .catch(function (err) {

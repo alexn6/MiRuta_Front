@@ -30,8 +30,11 @@
             deletePtoInteres: deletePtoInteres,
             getPtoInteresByType: getPtoInteresByType,
             // TIPO PUNTO DE INTERES
-            getTipoInteres: getTipoInteres,
+            getTipoPtoInteres: getTipoPtoInteres,
             getNamesTipoInteres: getNamesTipoInteres,
+            saveTipoPtoInteres: saveTipoPtoInteres,
+            updateTipoPtoInteres: updateTipoPtoInteres,
+            deleteTipoPtoInteres: deleteTipoPtoInteres,
             // ROUTING
             getAdreessFromCoord: getAdreessFromCoord
         };
@@ -368,16 +371,72 @@
             return promise;
         }
 
-        // ****************************** TIPO INTERES *************************
+        // ****************************** TIPO PUNTO INTERES *************************
         // *********************************************************************
 
-        function getTipoInteres(){
+        function getTipoPtoInteres(){
             var defered = $q.defer();
             var promise = defered.promise;
 
             $http({
                 method: 'GET',
                 url: path.ALL_TIPO_INTERES
+            }).then(function successCallback(res) {
+                defered.resolve(res.data);
+            },
+                function errorCallback(err) {
+                    defered.reject(err)
+                }
+            );
+
+            return promise;
+        }
+
+        function saveTipoPtoInteres(tipo_interes){
+            var defered = $q.defer();
+            var promise = defered.promise;
+
+            $http({
+                method: 'POST',
+                url: path.SAVE_TIPO_INTERES,
+                data: tipo_interes
+            }).then(function successCallback(res) {
+                defered.resolve(res.data);
+            },
+                function errorCallback(err) {
+                    defered.reject(err)
+                }
+            );
+
+            return promise;
+        }
+
+        function updateTipoPtoInteres(tipo_interes){
+            var defered = $q.defer();
+            var promise = defered.promise;
+
+            $http({
+                method: 'POST',
+                url: path.UPDATE_TIPO_INTERES,
+                data: tipo_interes
+            }).then(function successCallback(res) {
+                defered.resolve(res.data);
+            },
+                function errorCallback(err) {
+                    defered.reject(err)
+                }
+            );
+
+            return promise;
+        }
+
+        function deleteTipoPtoInteres(idTipoInteres){
+            var defered = $q.defer();
+            var promise = defered.promise;
+
+            $http({
+                method: 'POST',
+                url: path.DELETE_TIPO_INTERES + "?id=" + idTipoInteres
             }).then(function successCallback(res) {
                 defered.resolve(res.data);
             },
@@ -407,7 +466,7 @@
             return promise;
         }
 
-        // ######################## TIPO INTERES ########################
+        // ######################## ROUTING ########################
         // ##############################################################
 
         function getAdreessFromCoord(lon, lat){

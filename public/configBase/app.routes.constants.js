@@ -13,7 +13,8 @@
             ADMIN_RECORRIDO_VIEW: '/public/admin/partial/adminRecorridoView.html',
             ADMIN_RECORRIDO_VIEW_V1: '/public/admin/partial/adminRecorridoV1View.html',
             ADMIN_TRANSPORTE_VIEW: '/public/admin/partial/adminTransportesView.html',
-            ADMIN_TRANSPORTE_VIEW: '/public/admin/partial/adminTransportesView.html',
-            ADMIN_PTOINTERES_VIEW: '/public/admin/partial/adminPtoInteresView.html'
+            ADMIN_PTOINTERES_VIEW: '/public/admin/partial/adminPtoInteresView.html',
+            ADMIN_TIPO_PTOINTERES_VIEW: '/public/admin/partial/adminTipoPtoInteresView.html',
+            ADMIN_EMPRESA_VIEW: '/public/admin/partial/adminEmpresaView.html'
         });
 })()

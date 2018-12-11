@@ -60,6 +60,12 @@
                 .when('/adminPtoInteres', {
                     templateUrl: base_route + path.ADMIN_PTOINTERES_VIEW
                 })
+                .when('/adminTipoPtoInteres', {
+                    templateUrl: base_route + path.ADMIN_TIPO_PTOINTERES_VIEW
+                })
+                .when('/adminEmpresa', {
+                    templateUrl: base_route + path.ADMIN_EMPRESA_VIEW
+                })
                 .otherwise({
                     redirectTo: '/home'
                 });

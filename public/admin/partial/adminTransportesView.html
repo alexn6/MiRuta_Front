@@ -2,13 +2,13 @@
 <div class="row" ng-controller="adminTransportesController">
     <div class="card col-sm-12 col-md-12" style="text-align: center">
         <div class="card-header">
-            <h4>Administración de unidades</h4>
+            <h4>Administración de lineas de transporte</h4>
         </div>
 
         <!-- ################################# CREACION #################################
             ########################################################################### -->
         <div class="row">
-            <div class="card-body col-sm-5 col-md-5">
+            <div class="card-body col-sm-6 col-md-6">
                 <div id="accordion">
                     <div class="card">
                         <div class="card-header" id="headingOne">
@@ -19,70 +19,61 @@
                         <div id="collapseCreate" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionCreacion">
                             <div class="card-body">
                                 <form>
-                                    <div class="row form-group text-left">
-                                        <label for="exampleInputEmail1" class="col-sm-5 col-form-label">Nombre:</label>
-                                        <input type="text" class="form-control col-sm-6" id="exampleInputEmail1" 
-                                            ng-model="dataUnidadCreate.nombre" placeholder="unidad" required>
+                                    <div class="alert alert-warning" role="alert">
+                                        <small><b>Los campos con * son obligatorios</b></small>
                                     </div>
-                                    <div class="row form-group text-left">
-                                        <label class="col-sm-5 col-form-label">Frecuencia (min):</label>
+                                    <div id="formGroupCreate" class="row form-group text-left">
+                                        <label for="exampleInputEmail1" class="col-sm-5 col-form-label">Nombre (*)</label>
+                                        <input type="text" class="form-control col-sm-6" id="exampleInputEmail1" 
+                                            ng-model="dataUnidadCreate.nombre" placeholder="nombre linea">
+                                    </div>
+                                    <div id="formGroupCreate" class="row form-group text-left">
+                                        <label class="col-sm-5 col-form-label">Frecuencia (*)<small> [5 - 300 min]</small></label>
                                         <div class="input-group mb-1 col-sm-6">
-                                            <input type="number" min="5" max="59" step="5" data-number-to-fixed="2" data-number-stepfactor="0"
-                                                class="form-control currency" id="c2" ng-model="dataUnidadCreate.frecuencia" required/>
+                                            <input type="number" step="5" data-number-to-fixed="2" data-number-stepfactor="5"
+                                                class="form-control currency" id="c2" ng-model="dataUnidadCreate.frecuencia"/>
                                             <span class="input-group-text">min</span>
                                         </div>
                                     </div>
-                                    <div class="row form-group text-left">
-                                        <label class="col-form-label col-sm-5">Precio del boleto:</label>
-                                        <div class="input-group mb-1 col-sm-6">
-                                            <span class="input-group-text">$</span>
-                                            <input type="number" value={{intPrecioCreate}} min="0" step="1" data-number-to-fixed="2" data-number-stepfactor="0" class="form-control currency"
-                                                    id="c2" ng-model="intPrecioCreate" placeholder="00" required/>
-                                            <span class="input-group-text">.</span>
-                                            <input type="number" value={{decPrecioCreate}} min="0" max="75" step="25" data-number-to-fixed="2" data-number-stepfactor="0" class="form-control currency"
-                                                    id="c2" ng-model="decPrecioCreate" placeholder="00" required/>
+                                    <div id="formGroupCreate" class="row form-group text-left">
+                                        <label class="col-form-label col-sm-5">Precio de boleto (*)</label>
+                                        <div class="input-group col-sm-6 col-md-6 mb-1">
+                                            <select class="custom-select" ng-model="precioBoletoCreate" class="form-control currency"
+                                                 ng-options="precio.value for precio in opcionesPrecio | orderBy:'value' track by precio.id"></select>
                                         </div>
                                     </div>
-                                    <div class="row form-group text-left">
-                                            <label class="col-form-label col-sm-5">Inicio de recorrido</label>
-                                            <div class="input-group col-sm-6 col-md-6 mb-1">
-                                                    <input type="number" value={{dataUnidadCreate.horaInicio}} min="0" max="23" step="1" data-number-to-fixed="2" data-number-stepfactor="0"
-                                                        class="form-control currency" id="c2" ng-model="dataUnidadCreate.horaInicio" placeholder="hh" required/>
-                                                    <span class="input-group-text">:</span>
-                                                    <input type="number" value={{dataUnidadCreate.minInicio}} min="0" max="55" step="5" data-number-to-fixed="2" data-number-stepfactor="0"
-                                                        class="form-control currency" id="c2" ng-model="dataUnidadCreate.minInicio" placeholder="mm" required/>
-                                            </div>
+                                    <div id="formGroupCreate" class="row form-group text-left">
+                                        <label class="col-form-label col-sm-5">Inicio de recorrido (*)</label>
+                                        <div class="input-group col-sm-6 col-md-6 mb-1">
+                                            <select class="custom-select" ng-model="hsInicio" class="form-control currency"
+                                                ng-options="hs.value for hs in opcionesHs | orderBy:'value' track by hs.id"></select>
+                                            <span class="input-group-text">hs</span>
+                                            <select class="custom-select" ng-model="minInicio" class="form-control currency"
+                                                ng-options="min.value for min in opcionesMin | orderBy:'value' track by min.id"></select>
+                                            <span class="input-group-text">min</span>
+                                        </div>
                                     </div>
-                                    <div class="row form-group text-left">
-                                            <label class="col-form-label col-sm-5">Fin de recorrido</label>
-                                            <div class="input-group col-sm-6 col-md-6 mb-1">
-                                                    <input type="number" value={{dataUnidadCreate.horaFin}} min="0" max="23" step="1" data-number-to-fixed="2" data-number-stepfactor="0"
-                                                        class="form-control currency" id="c2" ng-model="dataUnidadCreate.horaFin" placeholder="hh" required/>
-                                                    <span class="input-group-text">:</span>
-                                                    <input type="number" value={{dataUnidadCreate.minFin}} min="0" max="55" step="5" data-number-to-fixed="2" data-number-stepfactor="0"
-                                                        class="form-control currency" id="c2" ng-model="dataUnidadCreate.minFin" placeholder="mm" required/>
-                                            </div>
+                                    <div id="formGroupCreate" class="row form-group text-left">
+                                        <label class="col-form-label col-sm-5">Fin de recorrido (*)</label>
+                                        <div class="input-group col-sm-6 col-md-6 mb-1">
+                                            <select class="custom-select" ng-model="hsFin" class="form-control currency"
+                                                ng-options="hs.value for hs in opcionesHs | orderBy:'value' track by hs.id"></select>
+                                            <span class="input-group-text">hs</span>
+                                            <select class="custom-select" ng-model="minFin" class="form-control currency"
+                                                ng-options="min.value for min in opcionesMin | orderBy:'value' track by min.id"></select>
+                                            <span class="input-group-text">min</span>
+                                        </div>
                                     </div>
-                                    <div class="row form-group text-left">
-                                            <label class="col-form-label col-sm-5">Empresa responsable</label>
-                                            <div class="input-group col-sm-6 col-md-6 mb-1">
-                                                <select class="custom-select" ng-change="selecEmpresaCreate()"
-                                                    ng-model="empresaSeleccionadaCreate" ng-options="empresa.nombre for empresa in empresas | orderBy:'nombre' track by empresa.id"></select>
-                                            </div>
+                                    <div id="formGroupCreate" class="row form-group text-left">
+                                        <label class="col-form-label col-sm-5">Empresa responsable (*)</label>
+                                        <div class="input-group col-sm-6 col-md-6 mb-1">
+                                            <select class="custom-select" ng-model="empresaSeleccionadaCreate"
+                                                ng-options="empresa.nombre for empresa in empresas | orderBy:'nombre' track by empresa.id"></select>
+                                        </div>
                                     </div>
-                                    <div class="alert alert-danger" ng-hide="datosOkCreate">
-                                        Datos incorrectos!
-                                    </div>
-                                    <div class="alert alert-danger" ng-hide="empresaSel">
-                                        Debe seleccionar una empresa
-                                    </div>
-                                    <div class="alert alert-success" ng-hide="!guardadoExitoso">
-                                        Unidad guardada con éxito!
-                                    </div>
-                                    <br>
                                     <div class="text-center btn-group-sm">
-                                            <button type="button" class="btn btn-info" ng-click="resetDatosCreate()" ng-disabled="!guardadoExitoso">Crear nueva unidad</button>
-                                        <button type="submit" class="btn btn-success" ng-click="crearUnidadNew()" ng-disabled="datosVaciosCreate()" >Guardar datos</button>
+                                            <button type="submit" class="btn btn-success" ng-click="crearUnidadNew()" ng-disabled="!creandoUnidad">Guardar datos</button>
+                                        <button type="button" class="btn btn-info" ng-click="resetDatosCreate()" ng-disabled="!guardadoExitoso" >Crear nueva unidad</button>
                                     </div>
                                 </form>
                             </div>
@@ -90,15 +81,160 @@
                     </div>
                 </div>
             </div>
+
+            <!-- ##################################################################
+            ###################### MODAL MJES INFO ########################### -->
+            <!-- faltan datos -->
+            <div class="modal fade" id="mod-faltan-datos" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-sm" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">MiRuta2018</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    </div>
+                    <div class="modal-body">
+                        <p><b>¡Faltan datos!</b></p>
+                        <p>Verfique los campos obligatorios (*)</p>
+                    </div>
+                    <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                    </div>
+                </div>
+                </div>
+            </div>
+
+            <!-- horario incorrecto -->
+            <div class="modal fade" id="mod-horario-incorrecto" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-sm" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">MiRuta2018</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        </div>
+                        <div class="modal-body">
+                            <p>Horarios de inicio/fin incorrectos</p>
+                        </div>
+                        <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- frecuencia incorrecto -->
+            <div class="modal fade" id="mod-frec-incorrecta" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-sm" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">MiRuta2018</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        </div>
+                        <div class="modal-body">
+                            <p>La frecuencia debe ser un valor entre 5 - 300 min</p>
+                        </div>
+                        <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- operacion exitosa -->
+            <div class="modal fade" id="mod-operacion-exitosa" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-sm" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="exampleModalLabel">MiRuta2018</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body">
+                      La operacion fue realizada con exito
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                    </div>
+                  </div>
+                </div>
+            </div>
+
+            <!-- confirma eliminar linea -->
+            <div class="modal fade" id="mod-eliminar-elemento" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-sm" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="exampleModalLabel">MiRuta2018</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body">
+                      ¿Esta seguro de eliminar el elemento seleccionado?
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                      <button type="button" class="btn btn-info" ng-click="eliminarLinea()" data-dismiss="modal">Aceptar</button>
+                    </div>
+                  </div>
+                </div>
+            </div>
+
+            <!-- descartar cambios -->
+            <div class="modal fade" id="mod-descartar-cambios" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-sm" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="exampleModalLabel">MiRuta2018</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body">
+                      Se perderan los datos realizados
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                      <button type="button" class="btn btn-info" ng-click="confirmarSalir()" data-dismiss="modal">Aceptar</button>
+                    </div>
+                  </div>
+                </div>
+            </div>
+
+            <!-- no hay cambios realizados -->
+            <div class="modal fade" id="mod-sin-cambios" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-sm" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="exampleModalLabel">MiRuta2018</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body">
+                      No se han realizado cambios
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                    </div>
+                  </div>
+                </div>
+            </div>
         
         <!-- ################################# EDICION #################################
         ########################################################################### -->
-            <div class="card-body col-sm-7 col-md-7">
+            <div class="card-body col-sm-6 col-md-6">
                 <div id="accordion">
                     <div class="card">
                         <div class="card-header" id="headingOne">
                             <h5 class="mb-0">
-                                    Edición de lineas
+                                Edición de lineas
                             </h5>
                         </div>
                         <div id="collapseEdit" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionEdition">
@@ -108,111 +244,75 @@
                                         <label for="exampleInputEmail1">Seleccione una linea de transporte</label>
                                         <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionEdition">
                                             <div class="card-body">
-                                                <!-- <select class="custom-select" id="repeatSelect" ng-model="nombreUnidadSeleccionada" ng-change="change()">
-                                                    <option ng-repeat="unidad in unidades">{{unidad.nombre}}</option>
-                                                </select> -->
                                                 <select class="custom-select" ng-change="changeUnidadSel()" ng-model="unidadSeleccionada" ng-options="unidad.nombre for unidad in unidades | orderBy:'nombre' track by unidad.id"></select>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="row" ng-hide="!unidadSel">
-                                        <div class="col-sm-7 col-md-7 text-left">
-                                            <h5 class="col-sm-11 col-md-11">Datos Actuales</h5>
-                                            <hr class="text-center">
-                                            <form>
-                                                <div class="row form-group">
-                                                    <label for="exampleInputEmail1" class="col-sm-6 col-form-label">Nombre:</label>
-                                                    <input type="text" class="form-control mb-1 col-sm-5" id="nombreActual" aria-describedby="emailHelp"
-                                                        ng-model="unidadSeleccionada.nombre" readonly />
-                                                </div>
-                                                <div class="row form-group">
-                                                    <label for="exampleInputEmail1" class="col-sm-6 col-form-label">Frecuencia (min):</label>
-                                                    <input type="number" value={{unidadSeleccionada.frecuencia}}
-                                                        class="form-control mb-1 col-sm-5" id="frecActual" readonly/>
-                                                </div>
-                                                <div class="row form-group">
-                                                    <label for="exampleInputEmail1" class="col-sm-6 col-form-label">Precio boleto ($):</label>
-                                                    <input type="number" value={{unidadSeleccionada.precioBoleto}}
-                                                        class="form-control mb-1 col-sm-5" id="frecActual" ng-model="unidadSeleccionada.precioBoleto" readonly/>
-                                                </div>
-                                                <div class="row form-group">
-                                                    <label for="exampleInputEmail1" class="col-sm-6 col-form-label">Hora inicio (HH:mm):</label>
-                                                    <input type="text" class="form-control mb-1 col-sm-5" id="horaIniActual" aria-describedby="emailHelp"
-                                                        value="{{unidadSeleccionada.horaInicio | date:'HH:mm'}}" readonly />
-                                                </div>
-                                                <div class="row form-group">
-                                                    <label for="exampleInputEmail1" class="col-sm-6 col-form-label">Hora fin (HH:mm):</label>
-                                                    <input type="text" class="form-control mb-1 col-sm-5" id="horaFinActual" aria-describedby="emailHelp"
-                                                        ng-model="unidadSeleccionada.horaFin" readonly />
-                                                </div>
-                                                <div class="row form-group">
-                                                    <label for="exampleInputEmail1" class="col-sm-6 col-form-label">Empresa:</label>
-                                                    <input type="text" class="form-control mb-1 col-sm-5" id="nombreActual" aria-describedby="emailHelp"
-                                                        ng-model="unidadSeleccionada.empresa.nombre" readonly />
-                                                </div>
-                                            </form>
+
+                                    <div class="text-left" ng-hide="!unidadSel">
+                                        <h5 class="col-sm-11 col-md-11">Datos de la linea</h5>
+                                        <hr>
+                                        <div class="alert alert-warning text-center" role="alert">
+                                            <small><b>Los campos con * son obligatorios</b></small>
                                         </div>
 
-                                        <div class="col-sm-5 col-md-5 text-left" >
-                                            <h5 class="col-sm-11 col-md-11">Datos Nuevos</h5>
-                                            <hr>
-                                            <form>
-                                                <div class="row form-group">
-                                                    <!-- mb3 seria como el interlineado -->
-                                                    <input type="text" class="form-control mb-1" id="exampleInputEmail1" aria-describedby="emailHelp"
-                                                        ng-model="dataUnidadUpdate.nombre" required />
-                                                </div>
-                                                <div class="row form-group">
-                                                    <input type="number" min="5" max="59" step="5" data-number-to-fixed="2" data-number-stepfactor="0"
-                                                        class="form-control mb-1 currency" id="frecNueva" ng-model="dataUnidadUpdate.frecuencia"/>
-                                                </div>
-                                                <div class="row form-group">
-                                                    <div class="input-group">
-                                                        <input type="number" value={{intPrecioUpdate}} min="0" step="1" data-number-to-fixed="2" data-number-stepfactor="0"
-                                                            class="form-control mb-1 currency" id="c2" ng-model="intPrecioUpdate"/>
-                                                        <span class="input-group-text mb-1">.</span>
-                                                        <input type="number" value={{decPrecioUpdate}} min="0" max="75" step="25" data-number-to-fixed="2" data-number-stepfactor="0"
-                                                            class="form-control mb-1 currency" id="c2" ng-model="decPrecioUpdate"/>
-                                                    </div>
-                                                </div>
-                                                <div class="row form-group">
-                                                    <div class="input-group">
-                                                        <input type="number" min="0" max="23" step="1" data-number-to-fixed="2" data-number-stepfactor="0"
-                                                                class="form-control mb-1 currency" id="c2" ng-model="dataUnidadUpdate.horaInicio" placeholder="hh" required/>
-                                                        <span class="input-group-text mb-1">:</span>
-                                                        <input type="number" min="0" max="55" step="5" data-number-to-fixed="2" data-number-stepfactor="0"
-                                                                class="form-control mb-1 currency" id="c2" ng-model="dataUnidadUpdate.minInicio" placeholder="mm" required/>
-                                                    </div>
-                                                </div>
-                                                <div class="row form-group">
-                                                    <div class="input-group">
-                                                        <input type="number" min="0" max="23" step="1" data-number-to-fixed="2" data-number-stepfactor="0"
-                                                                class="form-control mb-1 currency" id="c2" ng-model="dataUnidadUpdate.horaFin" placeholder="hh" required/>
-                                                        <span class="input-group-text mb-1">:</span>
-                                                        <input type="number" min="0" max="55" step="5" data-number-to-fixed="2" data-number-stepfactor="0"
-                                                                class="form-control mb-1 currency" id="c2" ng-model="dataUnidadUpdate.minFin" placeholder="mm" required/>
-                                                    </div>
-                                                </div>
-                                                <div class="row form-group">
-                                                    <select class="custom-select" ng-change="changeEmpresaSel()" ng-model="empresaNuevaSeleccionada"
-                                                        ng-options="empresa.nombre for empresa in empresas | orderBy:'nombre' track by empresa.id"></select>
-                                                </div>
-                                            </form>
+                                        <div id="formGroupEdit" class="row form-group col-sm-11 col-md-11">
+                                            <label class="col-form-label col-sm-6">Nombre (*)</label>
+                                            <div class="input-group col-sm-6 col-md-6 mb-1">
+                                                <input type="text" class="form-control mb-1" id="exampleInputEmail1" aria-describedby="emailHelp"
+                                                    ng-model="dataUnidadUpdate.nombre" required />
+                                            </div>
                                         </div>
-                                    </div>
-                                    <br>
-                                    <div class="alert alert-danger" ng-hide="datosCorrectos">
-                                        Datos incorrectos!
-                                    </div>
-                                    <div class="alert alert-success" ng-hide="!actualizacionCorrecta">
-                                        Actualizacion exitosa!
-                                    </div>
-                                    <div class="alert alert-success" ng-hide="!unidadEliminadaExito">
-                                        Unidad eliminada con éxito!
-                                    </div>
-                                    <div class="text-center btn-group-sm">
-                                        <button type="submit" class="btn btn-success" ng-click="actualizarUnidad()" ng-disabled="!unidadSel">Guardar</button>
-                                        <button type="button" class="btn btn-danger" ng-click="eliminarUnidad()" ng-disabled="!unidadSel">Eliminar</button>
+                                        <div id="formGroupEdit" class="row form-group col-sm-11 col-md-11">
+                                            <label class="col-form-label col-sm-6">Frecuencia (*) <small> [5 - 300 min]</small></label>
+                                            <div class="input-group col-sm-6 col-md-6 mb-1">
+                                                <input type="number" min="5" max="59" step="5" data-number-to-fixed="2" data-number-stepfactor="0"
+                                                    class="form-control mb-1 currency" id="frecNueva" ng-model="dataUnidadUpdate.frecuencia"/>
+                                            </div>
+                                        </div>
+                                        <div id="formGroupEdit" class="row form-group col-sm-11 col-md-11">
+                                            <div class="input-group">
+                                                <label class="col-form-label col-sm-6">Precio boleto (*)</label>
+                                                <div class="input-group col-sm-6 col-md-6 mb-1">
+                                                    <select class="custom-select" ng-model="precioBoletoUpdate" class="form-control currency"
+                                                        ng-options="precio.value for precio in opcionesPrecio | orderBy:'value' track by precio.id"></select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div id="formGroupEdit" class="row form-group col-sm-11 col-md-11">
+                                            <label class="col-form-label col-sm-6">Inicio de recorrido (*)</label>
+                                            <div class="input-group col-sm-6 col-md-6 mb-1">
+                                                <select class="custom-select" ng-model="hsInicioUpdate" class="form-control currency"
+                                                    ng-options="hs.value for hs in opcionesHs | orderBy:'value' track by hs.id"></select>
+                                                <span class="input-group-text">hs</span>
+                                                <select class="custom-select" ng-model="minInicioUpdate" class="form-control currency"
+                                                    ng-options="min.value for min in opcionesMin | orderBy:'value' track by min.id"></select>
+                                                <span class="input-group-text">min</span>
+                                            </div>
+                                        </div>
+                                        <div id="formGroupEdit" class="row form-group col-sm-11 col-md-11">
+                                            <label class="col-form-label col-sm-6">Fin de recorrido (*)</label>
+                                            <div class="input-group col-sm-6 col-md-6 mb-1">
+                                                <select class="custom-select" ng-model="hsFinUpdate" class="form-control currency"
+                                                    ng-options="hs.value for hs in opcionesHs | orderBy:'value' track by hs.id"></select>
+                                                <span class="input-group-text">hs</span>
+                                                <select class="custom-select" ng-model="minFinUpdate" class="form-control currency"
+                                                    ng-options="min.value for min in opcionesMin | orderBy:'value' track by min.id"></select>
+                                                <span class="input-group-text">min</span>
+                                            </div>
+                                        </div>
+                                        <div id="formGroupEdit" class="row form-group col-sm-11 col-md-11">
+                                            <label class="col-form-label col-sm-6">Empresa responsable (*)</label>
+                                            <div class="input-group col-sm-6 col-md-6 mb-1">
+                                                <select class="custom-select" ng-model="empresaNuevaSeleccionada"
+                                                    ng-options="empresa.nombre for empresa in empresas | orderBy:'nombre' track by empresa.id"></select>
+                                            </div>
+                                        </div>
+                                        <div id="botonesEdicion" class="text-center btn-group-sm col-sm-11 col-md-11">
+                                            <button type="submit" class="btn btn-info" ng-click="descartarCambios()">Descartar cambios</button>
+                                            <button type="submit" class="btn btn-success" ng-click="actualizarUnidad()">Guardar cambios</button>
+                                            <button type="button" class="btn btn-danger" ng-click="confirmaEliminarLinea()">Eliminar</button>
+                                        </div>
                                     </div>
                                 </form>
                             </div>

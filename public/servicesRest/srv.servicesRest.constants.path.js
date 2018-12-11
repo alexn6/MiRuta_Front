@@ -25,6 +25,9 @@
             SAVE_USUARIO: 'http://localhost:8080/miruta/users/create',
             // ###################### TIPO INTERES ######################
             ALL_TIPO_INTERES: 'http://localhost:8080/miruta/tipoInteres',
+            SAVE_TIPO_INTERES: 'http://localhost:8080/miruta/tipoInteres/create',
+            UPDATE_TIPO_INTERES: 'http://localhost:8080/miruta/tipoInteres/update',
+            DELETE_TIPO_INTERES: 'http://localhost:8080/miruta/tipoInteres/delete',
             NAMES_TIPO_INTERES: 'http://localhost:8080/miruta/tipoInteres/names',
             // ###################### PUNTO INTERES ######################
             SAVE_PTO_INETERES: 'http://localhost:8080/miruta/ptoInteres/create',
