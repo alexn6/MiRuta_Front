@@ -15,6 +15,6 @@
             ADMIN_TRANSPORTE_VIEW: '/public/admin/partial/adminTransportesView.html',
             ADMIN_PTOINTERES_VIEW: '/public/admin/partial/adminPtoInteresView.html',
             ADMIN_TIPO_PTOINTERES_VIEW: '/public/admin/partial/adminTipoPtoInteresView.html',
-            ADMIN_EMPRESA_VIEW: '/public/admin/partial/adminEmpresaView.html'
+            ADMIN_EMPRESA_VIEW: '/public/admin/partial/adminEmpresasView.html'
         });
 })()

@@ -1,0 +1,293 @@
+<navadmin></navadmin>
+<div class="row" ng-controller="adminEmpresasController">
+    <div class="card col-sm-12 col-md-12" style="text-align: center">
+        <div class="card-header">
+            <h4>Administración de empresas</h4>
+        </div>
+        <div class="row">
+            <!-- ################## CREACION ################## -->
+            <div class="card-body col-sm-6 col-md-6">
+                <div class="card col-sm-11 col-md-11">
+                    <div class="card-header" id="headingOne">
+                        <h5 class="mb-0">Creación de empresas</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="alert alert-warning" role="alert">
+                            <small><b>Los campos con * son obligatorios</b></small>
+                        </div>
+                        <div id="formGroupCreate" class="form-group text-left">
+                            <label for="exampleInputEmail1" class="col-form-label">Nombre (*)</label>
+                            <input type="text" class="form-control" id="exampleInputEmail1" 
+                                ng-model="empresaCreate.nombre" placeholder="nombre">
+                        </div>
+                        <div id="formGroupCreate" class="form-group text-left">
+                            <label for="exampleInputEmail1" class="col-form-label">Cuit (*) <small>[ejemplo: 12-23456789-0]</small></label>
+                            <div class="input-group mb-1">
+                                <input type="number" class="form-control" id="exampleInputEmail1" 
+                                    ng-model="cuitCreate_p1" maxlength = "2" placeholder="dd">
+                                <span class="input-group-text">-</span>
+                                <input type="number" class="form-control" id="exampleInputEmail1" 
+                                    ng-model="cuitCreate_p2" placeholder="dddddddd">        
+                                <span class="input-group-text">-</span>
+                                <input type="number" class="form-control" id="exampleInputEmail1" 
+                                    ng-model="cuitCreate_p3" placeholder="dd">
+                            </div>
+                        </div>
+                        <div id="formGroupCreate" class="form-group text-left">
+                            <label for="exampleInputEmail1" class="col-form-label">Mail (*)</label>
+                            <input type="text" class="form-control" id="exampleInputEmail1" 
+                                ng-model="empresaCreate.mail" placeholder="mail">
+                        </div>
+                        <div id="formGroupCreate" class="form-group text-left">
+                            <label for="exampleInputEmail1" class="col-form-label">Telefono (*) <small>[(codArea) numero]</small></label>
+                            <div class="alert alert-info text-center mb-3" role="alert">
+                                <small><b>[Cod. area]: entre 4 y 6 dígitos - [Numero]: entre 6 y 8 dígitos</b></small>
+                            </div>
+                            <div class="input-group mb-1">
+                                <input type="number" class="form-control" id="exampleInputEmail1" 
+                                    ng-model="codTelefonoCreate" placeholder="cod area">        
+                                <input type="number" class="form-control" id="exampleInputEmail1" 
+                                    ng-model="numTelefonoCreate" placeholder="numero">
+                            </div>
+                        </div>
+                        <div id="botonesEdicion" class="text-center btn-group-sm">
+                            <button type="submit" class="btn btn-success" ng-click="crearEmpresa()" ng-disabled="!creandoEmpresa">Guardar datos</button>
+                            <button type="button" class="btn btn-info" ng-click="resetDatosCreate()" ng-disabled="!guardadoExitoso" >Crear nueva empresa</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- ################## EDICION ################### -->
+            <div class="card-body col-sm-6 col-md-6">
+                <div class="card col-sm-11 col-md-11">
+                    <div class="card-header" id="headingOne">
+                        <h5 class="mb-0">Edicion de empresas</h5>
+                    </div>
+                    <div class="card-body text-left">
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Seleccione una empresa</label>
+                            <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionEdition">
+                                <div class="card-body">
+                                    <select class="custom-select" ng-change="changeEmpresaSel()" ng-model="empresaSeleccionada"
+                                        ng-options="empresa.nombre for empresa in empresas | orderBy:'nombre' track by empresa.id"></select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="text-left" ng-hide="!seSeleccionoEmpresa">
+                            <h5>Datos de la empresa</h5>
+                            <hr>
+                            <div class="alert alert-warning text-center" role="alert">
+                                <small><b>Los campos con * son obligatorios</b></small>
+                            </div>
+                            <div id="formGroupCreate" class="form-group text-left">
+                                <label for="exampleInputEmail1" class="col-form-label">Nombre (*)</label>
+                                <input type="text" class="form-control" id="exampleInputEmail1" 
+                                    ng-model="empresaUpdate.nombre" placeholder="nombre">
+                            </div>
+                            <div id="formGroupCreate" class="form-group text-left">
+                                <label for="exampleInputEmail1" class="col-form-label">Cuit (*) <small>[ejemplo: 12-23456789-0]</small></label>
+                                <div class="input-group mb-1">
+                                    <input type="number" class="form-control" id="exampleInputEmail1" 
+                                        ng-model="cuitUpdate_p1" maxlength = "2" placeholder="dd">
+                                    <span class="input-group-text">-</span>
+                                    <input type="number" class="form-control" id="exampleInputEmail1" 
+                                        ng-model="cuitUpdate_p2" placeholder="dddddddd">        
+                                    <span class="input-group-text">-</span>
+                                    <input type="number" class="form-control" id="exampleInputEmail1" 
+                                        ng-model="cuitUpdate_p3" placeholder="dd">
+                                </div>
+                            </div>
+                            <div id="formGroupCreate" class="form-group text-left">
+                                <label for="exampleInputEmail1" class="col-form-label">Mail (*)</label>
+                                <input type="text" class="form-control" id="exampleInputEmail1" 
+                                    ng-model="empresaUpdate.mail" placeholder="mail">
+                            </div>
+                            <div id="formGroupCreate" class="form-group text-left">
+                                <label for="exampleInputEmail1" class="col-form-label">Telefono (*) <small>[(codArea) numero]</small></label>
+                                <div class="alert alert-info text-center mb-3" role="alert">
+                                    <small><b>[Cod. area]: entre 4 y 6 dígitos - [Numero]: entre 6 y 8 dígitos</b></small>
+                                </div>
+                                <div class="input-group mb-1">
+                                    <input type="number" class="form-control" id="exampleInputEmail1" 
+                                        ng-model="codTelefonoUpdate" placeholder="cod area">        
+                                    <input type="number" class="form-control" id="exampleInputEmail1" 
+                                        ng-model="numTelefonoUpdate" placeholder="numero">
+                                </div>
+                            </div>
+                            <div id="botonesEdicion" class="text-center btn-group-sm">
+                                <button type="submit" class="btn btn-info" ng-click="descartarCambios()">Descartar cambios</button>
+                                <button type="submit" class="btn btn-success" ng-click="actualizarEmpresa()">Guardar cambios</button>
+                                <button type="button" class="btn btn-danger" ng-click="confirmaEliminarEmpresa()">Eliminar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+        <!-- ##################################################################
+    ###################### MODAL MJES INFO ########################### -->
+    <!-- faltan datos -->
+    <div class="modal fade" id="mod-faltan-datos" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-sm" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">MiRuta2018</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p><b>¡Faltan datos!</b></p>
+                    <p>Verfique los campos obligatorios (*)</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- operacion exitosa -->
+    <div class="modal fade" id="mod-operacion-exitosa" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-sm" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel">MiRuta2018</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  La operacion fue realizada con exito
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                </div>
+              </div>
+            </div>
+    </div>
+
+    <!-- descartar cambios -->
+    <div class="modal fade" id="mod-descartar-cambios" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-sm" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">MiRuta2018</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              Se perderan los datos realizados
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+              <button type="button" class="btn btn-info" ng-click="confirmaSalir()" data-dismiss="modal">Aceptar</button>
+            </div>
+          </div>
+        </div>
+    </div>
+
+    <!-- no hay cambios realizados -->
+    <div class="modal fade" id="mod-sin-cambios" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-sm" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">MiRuta2018</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              No se han realizado cambios
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+            </div>
+          </div>
+        </div>
+    </div>
+
+    <!-- confirma eliminar elemento -->
+    <div class="modal fade" id="mod-eliminar-elemento" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-sm" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">MiRuta2018</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              ¿Esta seguro de eliminar el elemento seleccionado?
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+              <button type="button" class="btn btn-info" ng-click="eliminarEmpresa()" data-dismiss="modal">Aceptar</button>
+            </div>
+          </div>
+        </div>
+    </div>
+
+    <!-- cuit incorrecto -->
+    <div class="modal fade" id="mod-cuit-incorrecto" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-sm" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">MiRuta2018</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                </div>
+                <div class="modal-body">
+                    <p>Controlar el valor del campo CUIT</p>
+                </div>
+                <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- cuit incorrecto -->
+    <div class="modal fade" id="mod-mail-incorrecto" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-sm" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">MiRuta2018</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                </div>
+                <div class="modal-body">
+                    <p>Controlar el valor del campo MAIL</p>
+                </div>
+                <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- telefono incorrecto -->
+    <div class="modal fade" id="mod-tel-incorrecto" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-sm" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">MiRuta2018</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                </div>
+                <div class="modal-body">
+                    <p>Controlar el valor del campo TELEFONO</p>
+                </div>
+                <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -21,6 +21,9 @@
             RECORRIDO: 'http://localhost:8080/miruta/unidadlinea/recorrido',
             // ###################### EMPRESA ######################
             ALL_EMPRESAS: 'http://localhost:8080/miruta/company',
+            SAVE_EMPRESA: 'http://localhost:8080/miruta/company/create',
+            UPDATE_EMPRESA: 'http://localhost:8080/miruta/company/update',
+            DELETE_EMPRESA: 'http://localhost:8080/miruta/company/delete',
             // ###################### USUARIO ######################
             SAVE_USUARIO: 'http://localhost:8080/miruta/users/create',
             // ###################### TIPO INTERES ######################

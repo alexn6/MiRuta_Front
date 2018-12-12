@@ -28,9 +28,9 @@
             if((vm.tipoPtoInteresCreate.nombre == null)||(vm.tipoPtoInteresCreate.nombre == "")){
                 return true;
             }
-            if((vm.tipoPtoInteresCreate.icono == null)||(vm.tipoPtoInteresCreate.nombre == "")){
-                return true;
-            }
+            // if((vm.tipoPtoInteresCreate.icono == null)||(vm.tipoPtoInteresCreate.nombre == "")){
+            //     return true;
+            // }
             return false;
         }
 
@@ -67,7 +67,10 @@
 
         vm.changeTipoSel = function(){
             actualizarSeleccion();
-            mostrarDatosTipoSeleccionado();
+            // para controlar cuando se elimina un elemento
+            if(vm.tipoPtoInteresSeleccionado != null){
+                mostrarDatosTipoSeleccionado();
+            }
         }
 
         function actualizarSeleccion(){
@@ -83,6 +86,7 @@
 
         function mostrarDatosTipoSeleccionado(){
             vm.dataTipoInteresUpdate.nombre = "" + vm.tipoPtoInteresSeleccionado.nombre;
+            // dsp incorporar el icono
         }
 
         function hayCambiosEdit(){
@@ -98,15 +102,16 @@
             if((vm.dataTipoInteresUpdate.nombre == null)||(vm.dataTipoInteresUpdate.nombre == "")){
                 return true;
             }
-            if((vm.dataTipoInteresUpdate.icono == null)||(vm.dataTipoInteresUpdate.nombre == "")){
-                console.log("Icono vacio");
-                return true;
-            }
+            // if((vm.dataTipoInteresUpdate.icono == null)||(vm.dataTipoInteresUpdate.nombre == "")){
+            //     console.log("Icono vacio");
+            //     return true;
+            // }
             return false;
         }
 
         vm.eliminarTipoInteres = function(){
             console.log("Se va a eliminarel tipo");
+            deleteTipoInteres();
         }
 
         vm.confirmaSalir = function(){
@@ -135,6 +140,7 @@
                 $('#mod-faltan-datos').modal('show');
                 return;
             }
+            // falta una funcion para recuperar los datos
             updateTipoInteres();
         }
 
@@ -163,7 +169,7 @@
                 nombre: null
             }
 
-            aux.nombre = vm.dataTipoInteresUpdate.nombre;
+            aux.nombre = vm.tipoPtoInteresCreate.nombre;
             // dataServer.saveTipoPtoInteres(vm.tipoPtoInteresCreate)
             dataServer.saveTipoPtoInteres(aux)
                 .then(function (data) {
@@ -193,6 +199,20 @@
                 .then(function (data) {
                     // una vez obtenida la respuesta del servidor realizamos las sigientes acciones
                     console.log("Datos actualizados con EXITO! = TIPO INTERES ACTUALIZADO");
+                    console.log(data);
+                    cargaTiposInteres();
+                    $('#mod-operacion-exitosa').modal('show');
+                })
+                .catch(function (err) {
+                    console.log("ERRRROOORR!!!!!!!!!! ---> Al guardar la NUEVO TIPO INTERES");
+                })
+        }
+
+        function deleteTipoInteres() {
+            dataServer.deleteTipoPtoInteres(vm.tipoPtoInteresSeleccionado.id)
+                .then(function (data) {
+                    // una vez obtenida la respuesta del servidor realizamos las sigientes acciones
+                    console.log("Datos eliminados con EXITO! = TIPO INTERES");
                     console.log(data);
                     cargaTiposInteres();
                     $('#mod-operacion-exitosa').modal('show');

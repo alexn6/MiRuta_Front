@@ -21,6 +21,9 @@
             setRecorrido: setRecorrido,
             deleteRecorrido: deleteRecorrido,
             // EMPRESAS
+            saveEmpresa: saveEmpresa,
+            updateEmpresa: updateEmpresa,
+            deleteEmpresa: deleteEmpresa,
             getEmpresas: getEmpresas,
             // USUARIOS
             saveUsuario: saveUsuario,
@@ -252,8 +255,64 @@
             return promise;
         }
 
-        // ****************************** EMPRESAS *****************************
-        // *********************************************************************
+        // ##############################################################
+        // ######################## EMPRESA #############################
+
+        function saveEmpresa(empresa){
+            var defered = $q.defer();
+            var promise = defered.promise;
+
+            $http({
+                method: 'POST',
+                url: path.SAVE_EMPRESA,
+                data: empresa
+            }).then(function successCallback(res) {
+                defered.resolve(res.data);
+            },
+                function errorCallback(err) {
+                    defered.reject(err)
+                }
+            );
+
+            return promise;
+        }
+
+        function updateEmpresa(empresa){
+            var defered = $q.defer();
+            var promise = defered.promise;
+
+            $http({
+                method: 'POST',
+                url: path.UPDATE_EMPRESA,
+                data: empresa
+            }).then(function successCallback(res) {
+                defered.resolve(res.data);
+            },
+                function errorCallback(err) {
+                    defered.reject(err)
+                }
+            );
+
+            return promise;
+        }
+
+        function deleteEmpresa(idEmpresa){
+            var defered = $q.defer();
+            var promise = defered.promise;
+
+            $http({
+                method: 'POST',
+                url: path.DELETE_EMPRESA + "?id=" + idEmpresa
+            }).then(function successCallback(res) {
+                defered.resolve(res.data);
+            },
+                function errorCallback(err) {
+                    defered.reject(err)
+                }
+            );
+
+            return promise;
+        }
         
         function getEmpresas() {
             var defered = $q.defer();

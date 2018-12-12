@@ -20,18 +20,19 @@
                             <input type="text" class="form-control" id="exampleInputEmail1" 
                                 ng-model="tipoPtoInteresCreate.nombre" placeholder="nombre del tipo de punto de interes">
                         </div>
-                        <div id="formGroupCreate" class="form-group text-left">
+                        <!-- <div id="formGroupCreate" class="form-group text-left">
                             <label for="exampleInputEmail1" class="col-form-label">Icono (*) <small>[sera la imagen con la que se mostrara el punto en el mapa]</small> </label>
                             <input type="text" class="form-control" id="exampleInputEmail1" 
                                 ng-model="tipoPtoInteresCreate.icono" placeholder="Seleccione una imagen">
-                        </div>
+                        </div> -->
                         <div id="botonesEdicion" class="text-center btn-group-sm">
-                            <button type="button" class="btn btn-info" ng-click="resetDatosCreate()" ng-disabled="!guardadoExitoso" >Crear nuevo tipo</button>
                             <button type="submit" class="btn btn-success" ng-click="crearTipoPtoInteres()" ng-disabled="!creandoTipo">Guardar datos</button>
+                            <button type="button" class="btn btn-info" ng-click="resetDatosCreate()" ng-disabled="!guardadoExitoso" >Crear nuevo tipo</button>
                         </div>
                     </div>
                 </div>
             </div>
+
             <!-- ################## EDICION ################### -->
             <div class="card-body col-sm-6 col-md-6">
                 <div class="card">
@@ -49,7 +50,7 @@
                             </div>
                         </div>
                         <div class="text-left  col-sm-11 col-md-11" ng-hide="!tipoSeleccionado">
-                            <h5>Datos de la linea</h5>
+                            <h5>Datos del tipo de punto</h5>
                             <hr>
                             <div class="alert alert-warning text-center" role="alert">
                                 <small><b>Los campos con * son obligatorios</b></small>
@@ -62,13 +63,13 @@
                                         ng-model="dataTipoInteresUpdate.nombre" required />
                                 </div>
                             </div>
-                            <div id="formGroupEdit" class="form-group">
+                            <!-- <div id="formGroupEdit" class="form-group">
                                 <label class="col-form-label">Icono (*) <small>[imagen que portara el marcador en el mapa]</small></label>
                                 <div class="input-group mb-1">
                                     <input type="text" class="form-control mb-1" id="exampleInputEmail1" aria-describedby="emailHelp"
                                         ng-model="dataTipoInteresUpdate.icono" required />
                                 </div>
-                            </div>
+                            </div> -->
                             <div id="botonesEdicion" class="text-center btn-group-sm">
                                 <button type="submit" class="btn btn-info" ng-click="descartarCambios()">Descartar cambios</button>
                                 <button type="submit" class="btn btn-success" ng-click="actualizarTipo()">Guardar cambios</button>
