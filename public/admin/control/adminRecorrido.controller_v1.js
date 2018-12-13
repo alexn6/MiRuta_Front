@@ -110,7 +110,8 @@
                     // una vez obtenida la respuesta del servidor realizamos las sigientes acciones
                     console.log("NUEVO RECORRIDO creado con EXITO!");
                     console.log(data);
-                    alert("El recorrido fue creado con exito!");
+                    // alert("El recorrido fue creado con exito!");
+                    $('#mod-operacion-exitosa').modal('show');
                     cargaRecorridos();
                 })
                 .catch(function (err) {
@@ -462,7 +463,8 @@
             var recorrido = recuperarRecorrido(vm.nombreUnidadSeleccionadaElim);
             if(recorrido == null){
                 console.log(" La unidad seleccionada no cuenta con un recorrido disponible");
-                alert(" La unidad seleccionada no cuenta con un recorrido disponible");
+                // alert(" La unidad seleccionada no cuenta con un recorrido disponible");
+                $('#mod-no-recorrido').modal('show');
                 return;
             }
             mostrarRecorridoUnidad(recorrido);
@@ -520,7 +522,8 @@
                         console.log(" Hubo un problema al borrar el recorrido!!!!");
                     })
             }else{
-                alert(" Debe seleccionar la unidad del recorrido a borrar!");
+                // alert(" Debe seleccionar la unidad del recorrido a borrar!");
+                $('#mod-seleccione-elemento').modal('show');
             }
         }
 
@@ -547,11 +550,13 @@
         vm.map.on('click', function (evt) {
             console.log(evt.coordinate);
             if (vm.nombreUnidadSeleccionada == "") {
-                alert("Debe seleccionar una UNIDAD DE TRANSPORTE antes de crear un recorrido");
+                // alert("Debe seleccionar una UNIDAD DE TRANSPORTE antes de crear un recorrido");
+                $('#mod-seleccione-elemento').modal('show');
             }
             else {
                 if (!vm.editIda && !vm.editVuelta) {
-                    alert("Debe seleccionar el tipo de recorrido que desea elaborar");
+                    // alert("Debe seleccionar el tipo de recorrido que desea elaborar");
+                    $('#mod-selec-tipo-recorrido').modal('show');
                     return;
                 }
 
@@ -585,7 +590,8 @@
             console.log("IDA : " + paradasRecorridoIda + " - - - VUELTA: " + paradasRecorridoVuelta);
 
             if ((paradasRecorridoIda < MIN_TAMANIO_RECORRIDO) || (paradasRecorridoVuelta < MIN_TAMANIO_RECORRIDO))  {
-                alert(" Los recorridos deben contener al menos " + MIN_TAMANIO_RECORRIDO + " paradas.")
+                // alert(" Los recorridos deben contener al menos " + MIN_TAMANIO_RECORRIDO + " paradas.")
+                $('#mod-pocas-paradas').modal('show');
                 return;
             }
             else {

@@ -5,6 +5,7 @@
             // ###################### PTO INTERES(cliente web) ######################
             PUNTO_CARGA: '../MiRuta_2017/public/src/img/carga.png',
             PUNTO_TRASLADO: '../MiRuta_2017/public/src/img/traslado.png',
+            PUNTO_DEFAULT: '../MiRuta_2017/public/src/img/location.png',
             // ###################### RECORRIDO(cliente web) ######################
             PUNTO_INICIO_RECORRIDO: '../MiRuta_2017/public/src/img/inicio-recorrido.png',
             PUNTO_FIN_RECORRIDO: '../MiRuta_2017/public/src/img/fin-recorrido.png',

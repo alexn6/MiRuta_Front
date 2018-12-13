@@ -322,6 +322,8 @@
             estilosActuales["carga"] = styles.marcadorCarga();
             //corregir esto
             estilosActuales["Taxi/Remis"] = styles.marcadorTraslado();
+            // default
+            estilosActuales["default"] = styles.marcadorDefault();
         }
 
         // agrega el tipo de punto generico
@@ -468,6 +470,13 @@
 
         function getStyleMarker(nombreTipoPunto){
             var estilo = estilosActuales[nombreTipoPunto];
+
+            console.log("Estilo del marcador");
+            console.log(estilo);
+            // si no encuentra un icono para el tipo de punto devuelve por default
+            if(typeof(estilo) === "undefined"){
+                estilo = estilosActuales["default"];
+            }
             return estilo;
         }
 
@@ -540,10 +549,6 @@
         // ###########################################################################
         // ########################### BUSCAR DIRECCION #############################
 
-        // restricciones de busqueda
-        // var options = {
-        //     componentRestrictions: {country: "in"}
-        // };
         vm.direccionSeleccionada = null;
 
         var inputFrom = document.getElementById('direccionAutocomplete');

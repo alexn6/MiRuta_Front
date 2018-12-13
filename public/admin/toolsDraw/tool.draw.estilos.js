@@ -13,13 +13,15 @@
             // ************** pto interes ****************
             marcadorCarga: marcadorCarga,
             marcadorTraslado: marcadorTraslado,
+            marcadorDefault: marcadorDefault,
             // ************** recorrido ****************
             marcadorInicioRecorrido: marcadorInicioRecorrido,
             marcadorFinRecorrido: marcadorFinRecorrido,
             recorridoUnidad: recorridoUnidad,
             puntoRecorrido: puntoRecorrido,
             marcadorParadaIda: marcadorParadaIda,
-            marcadorParadaVuelta: marcadorParadaVuelta
+            marcadorParadaVuelta: marcadorParadaVuelta,
+            recorridoRuta: recorridoRuta
         };
 
         return service;
@@ -37,6 +39,11 @@
             return estilo;
         }
 
+        function marcadorDefault(){
+            var estilo = createStyleByIcon(icon.PUNTO_DEFAULT);
+            return estilo;
+        }
+
         function marcadorInicioRecorrido(){
             var estilo = createStyleByIcon(icon.PUNTO_INICIO_RECORRIDO);
             return estilo;
@@ -49,6 +56,11 @@
 
         function recorridoUnidad(){
             var estilo = createStyleRoute();
+            return estilo;
+        }
+
+        function recorridoRuta(){
+            var estilo = createStyleRouteUser();
             return estilo;
         }
 
@@ -87,6 +99,16 @@
                 //   width: 3.5, color: [40, 40, 40, 0.8]
                     //width: 3.5, color: [211, 145, 58, 0.8]
                     width: 3.5, color: [198, 119, 40, 0.7]
+                })
+            });
+            
+            return estilo;
+        }
+
+        function createStyleRouteUser(){
+            var estilo = new ol.style.Style({
+                stroke: new ol.style.Stroke({
+                    width: 3.5, color: [150, 18, 40, 0.7]
                 })
             });
             

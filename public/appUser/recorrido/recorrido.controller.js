@@ -7,13 +7,14 @@
         .controller('recorridoController', [
             '$scope',
             'creatorMap',
+            'dataServer',
             'srvStyles',
             'srvDrawFeature',
             'srvComponents',
             RecorridoController
         ]);
 
-    function RecorridoController(vm, creatorMap, styles, drawFeature, drawing) {
+    function RecorridoController(vm, creatorMap, dataServer, styles, drawFeature, drawing) {
 
         // ********************************** VARIABLES PUBLICAS ************************
         // generamos un mapa de entrada
@@ -45,12 +46,11 @@
         var coordPuntoOrigen = null;
         var coordPuntoDestino = null;
 
-        // ********************************** FLAGS PUBLICAS ****************************
+        // var de los campo de textos de cada punto
+        vm.puntoOrigen = null;
+        vm.puntoDestino = null;
 
-        // ************************DECLARACION DE FUNCIONES PUBLICAS ********************
-
-
-        // ********************************** VARIABLES PRIVADAS ************************
+        // datos que seran enviados para buscar el mejor recorrido
         var datosRecorrido = {
             coordIni: null, // coordPuntoOrigen
             coordFin: null, // coordPuntoDestino
@@ -59,9 +59,10 @@
 
         // ###############################################################
         // ########################## PROMESAS ###########################
+
         function getRecorridoSelect(datos) {
-            // drawing.getRouteTransport(datos)
-            drawing.getRoute(datos)
+            drawing.getRouteTransport(datos)
+            //drawing.getRoute(datos)
                 .then(function (data) {
                     vectorSourceRuta.clear();
                     // una vez obtenida la respuesta del servidor realizamos las sigientes acciones
@@ -71,6 +72,7 @@
 
                     // creamos el componente a mostrar en la capa y le asignamos un identificador
                     var ruta = drawing.getFeatureRoute(coordGeomRuta);
+                    ruta.setStyle(styles.recorridoRuta());
                     // var id_inicial, id_feature;
                     // id_inicial = seleccionIdInicial();
                     // id_feature = getIdRuta(vm.ptosRecorrido);
@@ -86,6 +88,20 @@
                 .catch(function (err) {
                     console.log("ERRRROOORR!!!!!!!!!! ---> Al recuperar RUTA_PTOS");
                     console.log(err);
+                })
+        }
+
+        function recuperarDireccion(lat, lon){
+            dataServer.getAdreessFromCoord(lat, lon)
+                .then(function (data) {
+                    console.log("Get Direccion con EXITO! = ADREESS");
+                    // se vuelven a traer los datos para actualizarlos en la vista
+                    console.log(data);
+                    // actualizamos el campo de direccion
+                    asignarDireccion(data.calle, data.ciudad, data.provincia, data.pais);
+                })
+                .catch(function (err) {
+                    console.log("ERRRROOORR!!!!!!!!!! ---> Al actualizar las PUNTO_INTERES");
                 })
         }
 
@@ -162,6 +178,15 @@
             }
         }
 
+        function asignarDireccion(direCalle, direCiudad, direProv, direPais){
+            if(modoOrigen){
+                vm.puntoOrigen = direCalle+ ", "+direCiudad+ ", "+direProv+ ", "+direPais;
+            }
+            if(modoDestino){
+                vm.puntoDestino = direCalle+ ", "+direCiudad+ ", "+direProv+ ", "+direPais;
+            }
+        }
+
         // ###########################################################################
         // ################################# DIBUJO ##################################
         
@@ -184,9 +209,10 @@
                 var estilo = getStylePunto();
                 var sourceCapa = getSourceCapaPunto();
                 dibujarMarcadorUnico(evt.coordinate, estilo, sourceCapa);
+                recuperarDireccion(coordenadas[0], coordenadas[1]);
             }
             else{
-                alert("Seleccione el cuadro del punto a ubicar:\n [Origen/Destino]");
+                $('#mod-selec-punto').modal('show');
             }
         })
 
@@ -195,12 +221,14 @@
             $('[data-toggle="tooltip"]').tooltip()
           })
 
+        // para determinar que estoy enfocado en el cuadro de punto de origen
         vm.selectOrigen = function(elemSelect){
             // console.log("Se selecciono el origen");
             modoOrigen = true;
             modoDestino = false;
         }
 
+        // para determinar que estoy enfocado en el cuadro de punto de destino
         vm.selectDestino = function(elemSelect){
             modoDestino = true;
             modoOrigen = false;
