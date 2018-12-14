@@ -19,14 +19,14 @@
                                         ng-options="tipo.nombre for tipo in tiposInteres | orderBy:'nombre' track by tipo.id"></select>
                             </div>
                         </div>
-                        <div class="form-group" ng-hide="!tipoSeleccionado">
+                        <div class="form-group">
                             <div id="locationField">
                                 <label>(*) Direccion <small>[escriba la dirección o seleccione desde el mapa]</small></label>
                                 <input type="text" class="form-control" id="direccionAutocomplete" 
                                     ng-model="direccionSeleccionada" placeholder="Ingrese una direccion">
                             </div>
                         </div>
-                        <div class="form-group"  ng-hide="!tipoSeleccionado">
+                        <div class="form-group">
                             <div id="collapseThree" class="collapse show" aria-labelledby="headingCreate" data-parent="#accordion">
                                 <label>(*) Nombre </label>
                                 <input type="text" class="form-control" id="inputNombre" 
@@ -35,7 +35,7 @@
                         </div>
                         <div class="text-center btn-group-sm">
                             <button type="button" class="btn btn-success" ng-click="guardarPunto()" ng-disabled="guardadoExitoso">Guardar punto</button>
-                            <button type="button" class="btn btn-primary" ng-click="resetDatosCreate()" ng-disabled="!guardadoExitoso">Nuevo punto</button>
+                            <!-- <button type="button" class="btn btn-primary" ng-click="resetDatosCreate()" ng-disabled="!guardadoExitoso">Nuevo punto</button> -->
                         </div>
                     </form>
                 </div>
@@ -204,11 +204,32 @@
                   </button>
                 </div>
                 <div class="modal-body">
-                  Se perderan los datos realizados
+                  Se perderan los cambios realizados
                 </div>
                 <div class="modal-footer">
                   <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
                   <button type="button" class="btn btn-info" ng-click="confirmarSalir()" data-dismiss="modal">Aceptar</button>
+                </div>
+              </div>
+            </div>
+        </div>
+
+        <!-- descartar cambios -->
+        <div class="modal fade" id="mod-descartar-cambios-edit" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-sm" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel">MiRuta2018</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  Se perderan los datos realizados
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                  <button type="button" class="btn btn-info" ng-click="descartarCambiosEdit()" data-dismiss="modal">Aceptar</button>
                 </div>
               </div>
             </div>
@@ -230,6 +251,26 @@
                 <div class="modal-footer">
                   <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
                   <button type="button" class="btn btn-info" ng-click="eliminarPtoSeleccionado()" data-dismiss="modal">Aceptar</button>
+                </div>
+              </div>
+            </div>
+        </div>
+
+        <!-- punto ya existe -->
+        <div class="modal fade" id="mod-existe-punto" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-sm" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel">MiRuta2018</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  Ya existe un punto creado con esta información
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Aceptar</button>
                 </div>
               </div>
             </div>

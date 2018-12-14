@@ -63,8 +63,8 @@
         // cargamos de entrada los iconos que vamos a usar en la vista
         function cargarIconos(){
             // iconos para mostrar puntos
-            estilosMarcadores["carga"] = styles.marcadorCargaActual();
-            estilosMarcadores["traslado"] = styles.marcadorTrasladoActual();
+            estilosMarcadores["carga"] = styles.marcadorCarga();
+            estilosMarcadores["traslado"] = styles.marcadorTraslado();
         }
 
         // limpia el mapa y dibuja el marcador correspondiente a las coord dadas
@@ -132,7 +132,7 @@
         // ############################ CONEXION SERVIDOR ###############################
 
         function cargaTiposPuntosInteres() {
-            dataServer.getTipoInteres()
+            dataServer.getTipoPtoInteres()
                 .then(function (data) {
                     // una vez obtenida la respuesta del servidor realizamos las sigientes acciones
                     vm.nombresTiposInteres = data;

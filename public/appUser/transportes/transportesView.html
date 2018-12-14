@@ -13,6 +13,9 @@
                         ng-options="tipo.nombre for tipo in unidades | orderBy:'nombre' track by tipo.id"></select>
                 </div>
             </div>
+            <div class="alert alert-warning" role="alert" ng-hide="lineaConRecorrido">
+                <small><b>La linea seleccionada no cuenta con un recorrido</b></small>
+            </div>
             <div class="row form-group text-left" ng-hide="!hayUnidadSeleccionada">
                 <label for="exampleInputEmail1" class="col-sm-6 col-form-label">Nombre:</label>
                 <input type="text" class="form-control col-sm-6" id="nombrePuntoActual" 
@@ -43,22 +46,40 @@
                 <input type="text" class="form-control col-sm-6" id="nombrePuntoActual" 
                     ng-model="unidadSeleccionda.empresa.nombre" readonly>
             </div>
+            <!-- <div class="alert alert-info" role="alert" ng-hide="!hayUnidadSeleccionada">
+                <small><b>Icono parada Azul:</b> paradas de vuelta</small>
+                <small>Verde: paradas de ida</small>
+            </div> -->
             <div class="text-center btn-group-sm" ng-hide="!hayUnidadSeleccionada">
-                <!-- <button type="button" class="btn btn-info" ng-click="dibujarParadas()">Ver Paradas</button> -->
+                <button type="button" class="btn btn-info" ng-click="toogleRecorrido()">{{botonVerRecorrido}}</button>
                 <button type="button" class="btn btn-info" ng-click="mostrarParadas()">{{botonVerParadas}}</button>
             </div>
         </div> 
     </div>
 
-    <!-- <div class="card col-sm-8 col-md-8">
-        <div class="card-header">
-            Este si es el MAPA.
-        </div>
-        <div class="container-fluid-map">
-            <div id="map" class="map" style="position: fixed;"></div>
-        </div>
-    </div> -->
     <div class="card col-sm-8 col-md-8">
         <div id="map" class="map" style="position: relative;"></div>
+    </div>
+
+    <!-- ######################################################
+        ################## MJES DE INFO ####################### -->
+    <!-- no cuenta con recorrido -->
+    <div class="modal fade" id="mod-no-recorrido" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-sm" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel">MiRuta2018</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                    La unidad seleccionada no cuenta con un recorrido disponible
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
     </div>
 </div>

@@ -28,8 +28,13 @@
         // cantidad de marcadores para dibujar
         vm.puntosRecorrido;
         vm.botonVerParadas = "Ver paradas";
+        vm.botonVerRecorrido = "Ocultar Recorrido";
+        var recorridoMostrado = true;
         var paradasMostradas = false;
         vm.indiceMarcadorPtosRecorrido;
+
+        // para mostrar mje de alert en la vista
+        vm.lineaConRecorrido = true;
 
         var estilos = {
             recorrido: null,
@@ -48,7 +53,7 @@
         var capaDibujo = new ol.layer.Vector({
             source: vectorSourceDibujo
         });
-        // array donde se almacenan los marcadores
+        // array donde se almacenan los paradas
         var vectorSourceParadas = new ol.source.Vector();
         var capaParadas = new ol.layer.Vector({
             source: vectorSourceParadas
@@ -58,7 +63,8 @@
         // ############################## FUNCIONES ##################################
 
         vm.changeUnidad = function(){
-            console.log("cambio la unidad");
+            // console.log("cambio la unidad");
+            resetOpcionesBotones();
             if(vm.unidadSeleccionda != null){
                 vm.hayUnidadSeleccionada = true;
                 // cada vez q se cambia deberiamos dibujar lor recorridos
@@ -70,12 +76,24 @@
                 }
                 else{
                     console.log("El recorrido de la unidad seleccionada ya se recupero");
+                    vm.lineaConRecorrido = true;
                     var datosUnidad = coordRecorridos[vm.unidadSeleccionda.nombre];
                     dibujarRecorrido(datosUnidad);
                     verAnimacionRecorrido(datosUnidad);
                 }
             }
             
+        }
+
+        function resetOpcionesBotones(){
+            // reset de los botones
+            vectorSourceParadas.clear();
+            vm.botonVerParadas = "Ver paradas";
+            paradasMostradas = false;
+            // boton ocultar recorrido
+            recorridoMostrado = true;
+            capaDibujo.setVisible(true);
+            vm.botonVerRecorrido = "Ocultar recorrido";
         }
 
         // dibujo los recorridos de la unidad seleccionada
@@ -168,6 +186,10 @@
         }
 
         vm.mostrarParadas = function(){
+            if(!vm.lineaConRecorrido){
+                $('#mod-no-recorrido').modal('show');
+                return;
+            }
             var recorridoIda = vm.unidadSeleccionda.recorridoIda;
             var recorridoVuelta = vm.unidadSeleccionda.recorridoVuelta;
             verParadas(recorridoIda, estilos.parada_ida);
@@ -180,6 +202,24 @@
                 paradasMostradas = true;
                 capaParadas.setVisible(paradasMostradas);
                 vm.botonVerParadas = "Ocultar paradas";
+            }
+        }
+
+        // para ver/ocultar recorrido
+        vm.toogleRecorrido = function(){
+            if(!vm.lineaConRecorrido){
+                $('#mod-no-recorrido').modal('show');
+                return;
+            }
+            if(recorridoMostrado){
+                recorridoMostrado = false;
+                capaDibujo.setVisible(false);
+                vm.botonVerRecorrido = "Ver recorrido";
+            }
+            else{
+                recorridoMostrado = true;
+                capaDibujo.setVisible(true);
+                vm.botonVerRecorrido = "Ocultar recorrido";
             }
         }
 
@@ -248,7 +288,11 @@
                 marcador.setId(i);
                 vectorSource.addFeature(marcador);
                 i++;
-            }, 120, puntosRecorrido);
+                // intentamos borrar el ultimo punto
+                if(i == puntosRecorrido){
+                    vectorSource.clear();
+                }
+            }, 60, puntosRecorrido);
         }
 
         // ###########################################################################
@@ -284,9 +328,11 @@
                     var datosUnidad = coordRecorridos[vm.unidadSeleccionda.nombre];
                     dibujarRecorrido(datosUnidad);
                     verAnimacionRecorrido(datosUnidad);
+                    vm.lineaConRecorrido = true;
                 })
                 .catch(function (err) {
                     console.log("ERRRROOORR!!!!!!!!!! ---> Al cargar RECORRIDO_BY_ID");
+                    vm.lineaConRecorrido = false;
                 })
         }
 

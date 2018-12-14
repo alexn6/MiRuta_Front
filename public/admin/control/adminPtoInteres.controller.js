@@ -153,6 +153,12 @@
 
         // recupera los puntos del tipo seleccionado
         vm.buscarPuntos = function(){
+            console.log("Name tipo seleccionado: ");
+            console.log(vm.nameTipoSeleccionado);
+            // para no mostrar marcada en la lista la opcion anterior
+            vm.idPuntoFilaSeleccionada = null;
+
+
             if(vm.nameTipoSeleccionado == null){
                 $('#mod-falta-tipopunto').modal('show');
                 return;
@@ -164,6 +170,23 @@
             }
             vectorSourceEdicion.clear();
             getTipoPuntos();
+        }
+
+        // cuando se crea un nuevo punto
+        function actualizarGetPuntosTipoSelecciondado(){
+            // no se realizo la busqueda de tipo de puntos
+            if(vm.nameTipoSeleccionado == null){
+                return;
+            }
+            // volvemos a realizar la busqueda de puntos para mantener actualizada la lista de edicion
+            if((vm.nameTipoSeleccionado.nombre == "todos")||(vm.nameTipoSeleccionado.nombre == vm.tipoSeleccionado.nombre)){
+                console.log("[EDIT]: va a traer los ptoInteres");
+                getTipoPuntos();
+            }
+            else{
+                console.log("[EDIT]: lo deja como esta, no busca puntos");
+            }
+            
         }
 
         function updateDatosTabla(){
@@ -181,17 +204,37 @@
         vm.cancelarCambios = function(){
             if(!hayCambiosEdit()){
                 $('#mod-sin-cambios').modal('show');
+                return;
             }
+            else{
+                $('#mod-descartar-cambios-edit').modal('show');
+                return;
+            }
+            
+
+            // si hay nuevas coord es xq se modifico el pto original
+            // if(nuevasCoord != null){
+            //     var estilo = getStyleMarker(vm.datosPuntoSeleccionado.tipointeres.nombre);
+            //     dibujarMarcadorUnico(vm.datosPuntoSeleccionado.coordenada.coordinates, estilo, vectorSourceEdicion);
+            // }
+            // resetDatosEdit();
+        }
+
+        vm.descartarCambiosEdit = function(){
             // si hay nuevas coord es xq se modifico el pto original
             if(nuevasCoord != null){
                 var estilo = getStyleMarker(vm.datosPuntoSeleccionado.tipointeres.nombre);
                 dibujarMarcadorUnico(vm.datosPuntoSeleccionado.coordenada.coordinates, estilo, vectorSourceEdicion);
             }
-            resetDatosEdit();
+            // seteamos la nueva ubicacion
+            nuevasCoord = null;
+            mostrarDatosPuntoSeleccionado(vm.datosPuntoSeleccionado);
         }
 
         // cuando se selecciona un punto
         vm.setPuntoSelected = function(puntoSeleccionado){
+            console.log("Punto seleccionado:");
+            console.log(puntoSeleccionado);
             puntoSeleccionadoAux = puntoSeleccionado;
             vm.ptoInteresEditSelec = true;
             if(hayCambiosEdit()){
@@ -212,6 +255,8 @@
             vm.idPuntoFilaSeleccionada = puntoSeleccionadoAux.id;
             vm.datosPuntoSeleccionado = puntoSeleccionadoAux;
 
+            mostrarDatosPuntoSeleccionado(vm.datosPuntoSeleccionado);
+
             console.log("Punto seleccionado nuevo aux: ");
             console.log(puntoSeleccionadoAux);
             // recupero el estilo de acuerdo al tipo de punto para dibujarlo en el mapa
@@ -219,8 +264,15 @@
             dibujarMarcadorUnico(vm.datosPuntoSeleccionado.coordenada.coordinates, estilo, vectorSourceEdicion);
         }
 
+        function mostrarDatosPuntoSeleccionado(datosPunto){
+            vm.nuevoNombre = datosPunto.nombre;
+            // asignar nuevo tipo de punto a la lista de tipo de punto
+            vm.nuevoTipoPunto = datosPunto.tipointeres;
+        }
+
         // campos nuevos menu edicion
         function resetDatosEdit(){
+            vectorSourceEdicion.clear();
             vm.nuevoNombre = null;
             vm.nuevoTipoPunto = null;
             nuevasCoord = null;
@@ -262,10 +314,26 @@
         }
 
         function hayCambiosEdit(){
-            if(vm.nuevoNombre != null){
+            console.log("Entro a hayCambiosEdit()");
+            // si estas variables estan en null es xq es la 1ra vez q se buscan datos
+            if(vm.datosPuntoSeleccionado == null){
+                return false;
+            }
+            if((vm.nuevoNombre == null)||(vm.nuevoTipoPunto == null)){
+                return false;
+            }
+            // if(vm.nuevoNombre != null){
+            //     return true;
+            // }
+            // if(vm.nuevoTipoPunto != null){
+            //     return true;
+            // }
+            if(vm.nuevoNombre != vm.datosPuntoSeleccionado.nombre){
+                console.log("nombre lista: "+vm.datosPuntoSeleccionado.nombre+" - nuevo nombre: "+vm.nuevoNombre);
                 return true;
             }
-            if(vm.nuevoTipoPunto != null){
+            if(vm.nuevoTipoPunto.nombre != vm.datosPuntoSeleccionado.tipointeres.nombre){
+                console.log("tipo lista: "+vm.datosPuntoSeleccionado.tipointeres.nombre+" - nuevo tipo: "+vm.nuevoTipoPunto.nombre);
                 return true;
             }
             if(nuevasCoord != null){
@@ -307,12 +375,16 @@
             // tipo del punto actualizado
             var tipoPunto = datosNuevos.tipointeres.nombre;
             var estilo = getStyleMarker(tipoPunto);
-            // no mostramos el punto si se cambio de tipo
+            // no mostramos los datos del punto si se cambio de tipo
             if((vm.nameTipoSeleccionado.nombre == "todos") || (tipoPunto == vm.nameTipoSeleccionado.nombre)){
                 console.log("Entro a dibujar el punto: "+tipoPunto);
+                vm.idPuntoFilaSeleccionada = datosNuevos.id;
+                // vm.datosPuntoSeleccionado = puntoSeleccionadoAux;
                 dibujarMarcadorUnico(datosNuevos.coordenada.coordinates, estilo, vectorSourceEdicion);
+                mostrarDatosPuntoSeleccionado(datosNuevos);
+                return;
             }
-            vm.datosPuntoSeleccionado.nombre = datosNuevos.nombre;
+            //vm.datosPuntoSeleccionado.nombre = datosNuevos.nombre;
             resetDatosEdit();
         }
 
@@ -362,11 +434,14 @@
                     console.log("Creacion con EXITO! = PUNTOS_INTERES");
                     console.log(data);
                     // buscamos los puntos para que la creacion se vea reflejada en el otro panel
-                    vm.buscarPuntos();
+                    // vm.buscarPuntos();
+                    actualizarGetPuntosTipoSelecciondado();
                     $('#mod-operacion-exitosa').modal('show');
+                    vm.resetDatosCreate();
                 })
                 .catch(function (err) {
-                    console.log("ERRRROOORR!!!!!!!!!! ---> Al cargar las PUNTO_INTERES");
+                    console.log("ERRRROOORR!!!!!!!!!! ---> Al crear el PUNTO_INTERES");
+                    $('#mod-existe-punto').modal('show');
                 })
         }
 
@@ -380,13 +455,16 @@
                     console.log("Actualizacion con EXITO! = PUNTOS_INTERES");
                     console.log(data);
                     // esto para no mostrar el punto si es que se cambia de tipo
-                    vm.buscarPuntos();
+                    // vm.buscarPuntos();
+                    getTipoPuntos();
+                    vm.datosPuntoSeleccionado = data;
                     // se vuelven a traer los datos para actualizarlos en la vista
                     actualizarCamposPuntoEditado(data);
                     $('#mod-operacion-exitosa').modal('show');
                 })
                 .catch(function (err) {
                     console.log("ERRRROOORR!!!!!!!!!! ---> Al actualizar las PUNTO_INTERES");
+                    $('#mod-existe-punto').modal('show');
                 })
         }
 
@@ -436,19 +514,20 @@
         
         vm.map.on('click', function (evt) {
             if(modoCreacion){
-                if(vm.hayTipoSeleccionadoCreate()){
+                // if(vm.hayTipoSeleccionadoCreate()){
                     latPuntoCreacion = evt.coordinate[0];
                     lonPuntoCreacion = evt.coordinate[1];
 
                     recuperarDireccion(latPuntoCreacion, lonPuntoCreacion);
         
-                    var estilo = getStyleMarker(vm.tipoSeleccionado.nombre);
+                    // var estilo = getStyleMarker(vm.tipoSeleccionado.nombre);
+                    var estilo = getStyleMarker("aca iria el tipo elegido");
                     // arreglar la recuperacion del estilo
                     dibujarMarcadorUnico(evt.coordinate, estilo, vectorSourceCreacion);
-                }
-                else{
-                    $('#mod-falta-tipopunto').modal('show');
-                }
+                // }
+                // else{
+                //     $('#mod-falta-tipopunto').modal('show');
+                // }
             }
             
         });
@@ -468,16 +547,19 @@
             vm.map.getView().setZoom(ZOOM_PTO_INTERES);
         }
 
+        // ######### modificar para mostrar iconos #############
         function getStyleMarker(nombreTipoPunto){
-            var estilo = estilosActuales[nombreTipoPunto];
+            // var estilo = estilosActuales[nombreTipoPunto];
 
-            console.log("Estilo del marcador");
-            console.log(estilo);
-            // si no encuentra un icono para el tipo de punto devuelve por default
-            if(typeof(estilo) === "undefined"){
-                estilo = estilosActuales["default"];
-            }
-            return estilo;
+            // console.log("Estilo del marcador");
+            // console.log(estilo);
+            // // si no encuentra un icono para el tipo de punto devuelve por default
+            // if(typeof(estilo) === "undefined"){
+            //     estilo = estilosActuales["default"];
+            // }
+            // return estilo;
+            
+            return estilosActuales["default"];
         }
 
         function selectModoCreate(){

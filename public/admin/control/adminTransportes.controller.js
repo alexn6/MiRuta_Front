@@ -58,9 +58,14 @@
                     vm.creandoUnidad = false;
                     cargaUnidades();
                     $('#mod-operacion-exitosa').modal('show');
+                    vm.resetDatosCreate();
                 })
                 .catch(function (err) {
-                    console.log("ERRRROOORR!!!!!!!!!! ---> Al guardar la NUEVA UNIDAD");
+                    // if(err.data=="401")
+                    // { do this}
+                    console.log("ERRRROOORR!!!!!!!!!! ---> Al guardar la NUEVA UNIDAD: "+err.status);
+                    console.log(err);
+                    $('#mod-ya-existe').modal('show');
                 })
         }
 
@@ -78,6 +83,7 @@
                 })
                 .catch(function (err) {
                     console.log("ERRRROOORR!!!!!!!!!! ---> Al actualizar la UNIDAD");
+                    $('#mod-ya-existe').modal('show');
                 })
         }
 
@@ -237,6 +243,10 @@
         //********************** Funciones *********************
 
         vm.actualizarUnidad = function(){
+            if(!hayCambiosEdit()){
+                $('#mod-sin-cambios').modal('show');
+                return;
+            }
             if (nombreVacio()){
                 $('#mod-faltan-datos').modal('show');
                 return;
@@ -441,6 +451,7 @@
 
         // deberia recibir como parametro la frecuencia
         function frecuenciaCorrecta(frecuencia){
+            console.log("Frec recibida: "+frecuencia);
             if((frecuencia >= 5 ) && (frecuencia <= 300))
                 return true;
             return false;

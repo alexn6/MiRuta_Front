@@ -242,6 +242,44 @@
         vm.map.addLayer(capaRuta);
         cargarIconos();
 
+
+        // para encontrar la ubicacion actual
+        function showPosition(position) {
+            console.log("Posicion: "+position);
+        }
+
+        function errorCallback(){
+            console.log("Paso el tiempo de espera: no se encontro la ubicacion");
+        }
+        
+        // buscando mi ubicacion
+        function getLocation() {
+            console.log("entro a geoLocation()");
+            if (navigator.geolocation) {
+                // navigator.geolocation.getCurrentPosition(showPosition);
+                // navigator.geolocation.getCurrentPosition(showPosition,errorCallback,{timeout:30000});
+                navigator.geolocation.getCurrentPosition(showPosition, errorCallback, {maximumAge:60000, timeout:5000, enableHighAccuracy:true});
+
+            } else { 
+                x.innerHTML = "Geolocation is not supported by this browser.";
+            }
+        }
+
+        //getLocation();
+
+        function testGeolcation(){
+            if ("geolocation" in navigator) {
+                console.log("SI geolocation");
+                navigator.geolocation.getCurrentPosition(function(position) {
+                    // do_something(position.coords.latitude, position.coords.longitude);
+                    console.log("algo");
+                  });
+              } else {
+                console.log("No geolocation");
+              }
+        }
+        //testGeolcation();
+
     } // fin Constructor
 
 })()

@@ -27,7 +27,7 @@
                         </div> -->
                         <div id="botonesEdicion" class="text-center btn-group-sm">
                             <button type="submit" class="btn btn-success" ng-click="crearTipoPtoInteres()" ng-disabled="!creandoTipo">Guardar datos</button>
-                            <button type="button" class="btn btn-info" ng-click="resetDatosCreate()" ng-disabled="!guardadoExitoso" >Crear nuevo tipo</button>
+                            <!-- <button type="button" class="btn btn-info" ng-click="resetDatosCreate()" ng-disabled="!guardadoExitoso" >Crear nuevo tipo</button> -->
                         </div>
                     </div>
                 </div>
@@ -182,6 +182,26 @@
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
               <button type="button" class="btn btn-info" ng-click="eliminarTipoInteres()" data-dismiss="modal">Aceptar</button>
+            </div>
+          </div>
+        </div>
+    </div>
+
+    <!-- confirma eliminar linea -->
+    <div class="modal fade" id="mod-existe-elemento" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-sm" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">MiRuta2018</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              Ya existe un tipo con esos datos
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Aceptar</button>
             </div>
           </div>
         </div>

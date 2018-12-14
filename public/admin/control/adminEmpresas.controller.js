@@ -345,9 +345,11 @@
                     vm.creandoEmpresa = false;
                     cargarEmpresas();
                     $('#mod-operacion-exitosa').modal('show');
+                    vm.resetDatosCreate();
                 })
                 .catch(function (err) {
                     console.log("ERRRROOORR!!!!!!!!!! ---> Al guardar la NUEVO EMPRESA");
+                    $('#mod-existe-empresa').modal('show');
                 })
         }
 
@@ -362,6 +364,7 @@
                 })
                 .catch(function (err) {
                     console.log("ERRRROOORR!!!!!!!!!! ---> Al actualizar la NUEVA EMPRESA");
+                    $('#mod-existe-empresa').modal('show');
                 })
         }
 

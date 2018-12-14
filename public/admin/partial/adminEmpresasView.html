@@ -30,7 +30,7 @@
                                     ng-model="cuitCreate_p2" placeholder="dddddddd">        
                                 <span class="input-group-text">-</span>
                                 <input type="number" class="form-control" id="exampleInputEmail1" 
-                                    ng-model="cuitCreate_p3" placeholder="dd">
+                                    ng-model="cuitCreate_p3" placeholder="d">
                             </div>
                         </div>
                         <div id="formGroupCreate" class="form-group text-left">
@@ -51,8 +51,8 @@
                             </div>
                         </div>
                         <div id="botonesEdicion" class="text-center btn-group-sm">
-                            <button type="submit" class="btn btn-success" ng-click="crearEmpresa()" ng-disabled="!creandoEmpresa">Guardar datos</button>
-                            <button type="button" class="btn btn-info" ng-click="resetDatosCreate()" ng-disabled="!guardadoExitoso" >Crear nueva empresa</button>
+                            <button type="submit" class="btn btn-success" ng-click="crearEmpresa()">Guardar datos</button>
+                            <!-- <button type="button" class="btn btn-info" ng-click="resetDatosCreate()" ng-disabled="!guardadoExitoso" >Crear nueva empresa</button> -->
                         </div>
                     </div>
                 </div>
@@ -286,6 +286,26 @@
                 </div>
                 <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- empresa ya existe -->
+    <div class="modal fade" id="mod-existe-empresa" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-sm" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel">MiRuta2018</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  Ya existe una empresa con el/los dato/s ingresado/s
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Aceptar</button>
                 </div>
             </div>
         </div>

@@ -30,8 +30,7 @@
                                     <div id="formGroupCreate" class="row form-group text-left">
                                         <label class="col-sm-5 col-form-label">Frecuencia (*)<small> [5 - 300 min]</small></label>
                                         <div class="input-group mb-1 col-sm-6">
-                                            <input type="number" step="5" data-number-to-fixed="2" data-number-stepfactor="5"
-                                                class="form-control currency" id="c2" ng-model="dataUnidadCreate.frecuencia"/>
+                                            <input type="number" class="form-control currency" id="c2" ng-model="dataUnidadCreate.frecuencia"/>
                                             <span class="input-group-text">min</span>
                                         </div>
                                     </div>
@@ -72,8 +71,8 @@
                                         </div>
                                     </div>
                                     <div class="text-center btn-group-sm">
-                                            <button type="submit" class="btn btn-success" ng-click="crearUnidadNew()" ng-disabled="!creandoUnidad">Guardar datos</button>
-                                        <button type="button" class="btn btn-info" ng-click="resetDatosCreate()" ng-disabled="!guardadoExitoso" >Crear nueva unidad</button>
+                                        <button type="submit" class="btn btn-success" ng-click="crearUnidadNew()" ng-disabled="!creandoUnidad">Guardar datos</button>
+                                        <!-- <button type="button" class="btn btn-info" ng-click="resetDatosCreate()" ng-disabled="!guardadoExitoso" >Crear nueva unidad</button> -->
                                     </div>
                                 </form>
                             </div>
@@ -226,6 +225,26 @@
                   </div>
                 </div>
             </div>
+
+            <!-- ya existe la linea -->
+            <div class="modal fade" id="mod-ya-existe" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-sm" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="exampleModalLabel">MiRuta2018</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body">
+                      Ya se encuentra creada una linea con ese nombre
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                    </div>
+                  </div>
+                </div>
+            </div>
         
         <!-- ################################# EDICION #################################
         ########################################################################### -->
@@ -266,8 +285,7 @@
                                         <div id="formGroupEdit" class="row form-group col-sm-11 col-md-11">
                                             <label class="col-form-label col-sm-6">Frecuencia (*) <small> [5 - 300 min]</small></label>
                                             <div class="input-group col-sm-6 col-md-6 mb-1">
-                                                <input type="number" min="5" max="59" step="5" data-number-to-fixed="2" data-number-stepfactor="0"
-                                                    class="form-control mb-1 currency" id="frecNueva" ng-model="dataUnidadUpdate.frecuencia"/>
+                                                <input type="number" class="form-control mb-1 currency" id="frecNueva" ng-model="dataUnidadUpdate.frecuencia"/>
                                             </div>
                                         </div>
                                         <div id="formGroupEdit" class="row form-group col-sm-11 col-md-11">

@@ -179,10 +179,12 @@
                     vm.guardadoExitoso = true;
                     vm.creandoTipo = false;
                     cargaTiposInteres();
+                    vm.resetDatosCreate();
                     $('#mod-operacion-exitosa').modal('show');
                 })
                 .catch(function (err) {
                     console.log("ERRRROOORR!!!!!!!!!! ---> Al guardar la NUEVO TIPO INTERES");
+                    $('#mod-existe-elemento').modal('show');
                 })
         }
 
@@ -205,6 +207,7 @@
                 })
                 .catch(function (err) {
                     console.log("ERRRROOORR!!!!!!!!!! ---> Al guardar la NUEVO TIPO INTERES");
+                    $('#mod-existe-elemento').modal('show');
                 })
         }
 
@@ -218,7 +221,7 @@
                     $('#mod-operacion-exitosa').modal('show');
                 })
                 .catch(function (err) {
-                    console.log("ERRRROOORR!!!!!!!!!! ---> Al guardar la NUEVO TIPO INTERES");
+                    console.log("ERRRROOORR!!!!!!!!!! ---> Al eliminar la NUEVO TIPO INTERES");
                 })
         }
 
